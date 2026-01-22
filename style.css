@@ -1,0 +1,38 @@
+:root {
+    --maroon-dark: #800000;
+    --maroon-light: #a52a2a;
+    --white: #ffffff;
+}
+
+body { background-color: #f8f9fa; }
+
+.navbar-qc {
+    background-color: var(--maroon-dark);
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background-color: var(--maroon-dark) !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+.btn-maroon {
+    background-color: var(--maroon-dark);
+    color: white;
+    transition: 0.3s;
+}
+
+.btn-maroon:hover {
+    background-color: var(--maroon-light);
+    color: white;
+}
+
+.form-label { font-weight: 600; color: #444; }
+
+.input-group-text {
+    background-color: #eee;
+    color: var(--maroon-dark);
+    font-weight: bold;
+}
