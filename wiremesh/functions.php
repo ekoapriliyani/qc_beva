@@ -1,6 +1,6 @@
 <?php
 
-require 'koneksi.php';
+require '../koneksi.php';
 
 // fungsi query tampil data
 function query($query)

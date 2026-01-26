@@ -42,40 +42,46 @@ if (isset($_GET['id'])) {
 <div class="form-container">
     <div class="form-header">
         <h2><i class="fas fa-microscope"></i> Tambah Detail Pengukuran</h2>
-        <p>ID Inspeksi: <strong><?php echo $id_inspeksi; ?></strong> | PRO: <strong><?php echo $header['pro']; ?></strong></p>
+        <p>ID Inspeksi: <strong><?php echo $id_inspeksi; ?></strong></p>
     </div>
 
     <form action="proses_simpan_detail_wm.php" method="POST">
         <input type="hidden" name="id_inspeksi" value="<?php echo $id_inspeksi; ?>">
-
-        
-        <div class="form-group">
-            <label for="">Material</label>
-            <input type="text" name="material">
-        </div>
-
         <div class="grid-container">
             <div class="section-title"><i class="fas fa-info-circle"></i> Standar Referensi (Tabel Produk)</div>
             
             <div class="form-group">
-                <label>Production Code</label>
+                <label for="">PRO Number</label>
+                <input type="text" class="readonly-field" value="<?=  $header['pro_number']; ?>" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Product Code</label>
                 <input type="text" class="readonly-field" value="<?php echo $header['prod_code']; ?>" readonly>
             </div>
+
+            <div class="form-group">
+                <label>D. Kawat Standard (Tol: <?php echo $header['tol_min']; ?> / <?php echo $header['tol_plus']; ?>)</label>
+                <input type="text" class="readonly-field" value="<?php echo $header['d_kawat'] . ' mm'; ?>" readonly>
+            </div>
+
             <div class="form-group">
                 <label>Jarak Mesh Standar</label>
-                <input type="text" class="readonly-field" value="<?php echo $header['jarak_mesh']; ?>" readonly>
+                <input type="text" class="readonly-field" value="<?php echo $header['jarak_mesh'] . ' mm'; ?>" readonly>
             </div>
-            <div class="form-group">
-                <label>D. Kawat Standar (Tol: <?php echo $header['tol_min']; ?> / <?php echo $header['tol_plus']; ?>)</label>
-                <input type="text" class="readonly-field" value="<?php echo $header['d_kawat']; ?>" readonly>
-            </div>
+            
             <div class="form-group">
                 <label>P x L Produk Standar</label>
-                <input type="text" class="readonly-field" value="<?php echo $header['p_produk'] . ' x ' . $header['l_produk']; ?>" readonly>
+                <input type="text" class="readonly-field" value="<?php echo $header['p_produk'] . ' x ' . $header['l_produk'] . ' mm'; ?>" readonly>
             </div>
             <div class="form-group">
                 <label>P x L Mesh Standar</label>
-                <input type="text" class="readonly-field" value="<?php echo $header['p_mesh'] . ' x ' . $header['l_mesh']; ?>" readonly>
+                <input type="text" class="readonly-field" value="<?php echo $header['p_mesh'] . ' x ' . $header['l_mesh'] . ' mm'; ?>" readonly>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="">Material</label>
+                <input type="text" name="material" autofocus>
             </div>
 
             <div class="section-title"><i class="fas fa-edit"></i> Hasil Pengukuran Aktual</div>

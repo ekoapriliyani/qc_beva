@@ -14,35 +14,21 @@ function query($query)
     return $rows;
 }
 
-function tambah_pro($data){
+// fungsi tambah data
+function tambah($data)
+{
     global $conn;
-    
-    $pro_number = $data["pro_number"];
-    $query = "INSERT INTO t_pro (pro_number) VALUES('$pro_number')";
+    $nama_platform = $data["nama_platform"];
+    $versi = $data["versi"];
+    $deskripsi = $data["deskripsi"];
+
+    $query = "INSERT INTO platform VALUES(
+        '', '$nama_platform', '$versi', '$deskripsi'
+    )";
 
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
-
-
-
-
-// fungsi tambah data
-// function tambah($data)
-// {
-//     global $conn;
-//     $nama_platform = $data["nama_platform"];
-//     $versi = $data["versi"];
-//     $deskripsi = $data["deskripsi"];
-
-//     $query = "INSERT INTO platform VALUES(
-//         '', '$nama_platform', '$versi', '$deskripsi'
-//     )";
-
-//     mysqli_query($conn, $query);
-//     return mysqli_affected_rows($conn);
-// }
-
 
 // fungsi ubah data
 function ubah($data)

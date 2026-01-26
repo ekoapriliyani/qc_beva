@@ -158,14 +158,14 @@
         .specs-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         .specs-table th, .specs-table td {
             border: 1px solid #eee;
-            padding: 12px;
+            padding: 2px;
             text-align: left;
         }
-        .specs-table th { background-color: #f9f9f9; width: 40%; }
+        .specs-table th { background-color: #f9f9f9; }
 
         @media print {
             .btn-print { display: none; }

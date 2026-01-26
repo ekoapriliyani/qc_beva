@@ -61,7 +61,7 @@ if (isset($_GET['id'])) {
         </div>
         <div class="info-box">
             <h4>Nomor PRO</h4>
-            <p><?php echo $data['pro']; ?></p>
+            <p><?php echo $data['pro_number']; ?></p>
         </div>
         <div class="info-box">
             <h4>QTY PRO</h4>
@@ -98,6 +98,7 @@ if (isset($_GET['id'])) {
                     <th>Shear (MPa)</th>
                     <th>Torsi</th>
                     <th>Visual</th>
+                    <th></th>
                     <th class="btn-print" style="text-align: center;">Aksi</th>
                 </tr>
             </thead>
@@ -109,10 +110,6 @@ if (isset($_GET['id'])) {
                 
                 if (mysqli_num_rows($query_detail) > 0) {
                     while ($row_det = mysqli_fetch_assoc($query_detail)) {
-                        // Logika warna untuk visual jika bukan OK
-                        $visual_color = ($row_det['visual'] != 'OK') ? 'color: #dc3545; font-weight: bold;' : '';
-                        $torsi_color = ($row_det['torsi_strgh'] != 'OK') ? 'color: #dc3545; font-weight: bold;' : '';
-
                         echo "<tr>";
                         echo "<td style='text-align: center;'>".$no++."</td>";
                         echo "<td>".$row_det['material']."</td>";
@@ -121,8 +118,9 @@ if (isset($_GET['id'])) {
                         echo "<td>".$row_det['p_mesh_act']." x ".$row_det['l_mesh_act']."</td>";
                         echo "<td>".$row_det['diagonal']."</td>";
                         echo "<td>".$row_det['shear_strght_mpa']."</td>";
-                        echo "<td style='$torsi_color'>".$row_det['torsi_strgh']."</td>";
-                        echo "<td style='$visual_color'>".$row_det['visual']."</td>";
+                        echo "<td>".$row_det['torsi_strgh']."</td>";
+                        echo "<td>".$row_det['visual']."</td>";
+                        echo "<td>".$row_det['created_at']."</td>";
                         echo "<td class='btn-print' style='text-align: center;'>
                                 <a href='hapus_detail.php?id_detail=".$row_det['id_detail']."&id_main=$id' 
                                    style='color: #dc3545;' 
@@ -140,45 +138,53 @@ if (isset($_GET['id'])) {
         </table>
     </div>
 
-    <h3 style="border-bottom: 1px solid var(--primary-color); padding-bottom: 5px;">Data Produksi</h3>
+    <!-- <h3 style="border-bottom: 1px solid var(--primary-color); padding-bottom: 5px;">Data Produksi</h3> -->
     <form action="proses_inspeksi.php" method="post">
     <table class="specs-table">
-        <tr>
+        <!-- <tr>
             <th>Jumlah Sample</th>
             <td>
                 <input type="number" name="jml_sample_diambil" 
                        value="<?php echo $data['jml_sample_diambil']; ?>" 
                        required>
             </td>
-        </tr>
+        </tr> -->
         <tr>
             <th>Jumlah NG</th>
             <td>
+                <div class="form-group">
                 <input type="number" name="jml_ng" 
                        value="<?php echo $data['jml_ng']; ?>" 
                        required>
+                </div>
             </td>
         </tr>
         <tr>
             <th>Jumlah Reject</th>
             <td>
+                <div class="form-group">
                 <input type="number" name="jml_reject" 
                        value="<?php echo $data['jml_reject']; ?>" 
                        required>
+                </div>
             </td>
         </tr>
         <tr>
             <th>Total Produksi per Shift</th>
             <td>
+                <div class="form-group">
                 <input type="number" name="total_produksi" 
                        value="<?php echo $data['total_produksi']; ?>" 
                        required>
+                </div>
             </td>
         </tr>
         <tr>
             <th>Status Repair / Catatan</th>
             <td>
+                <div class="form-group">
                 <textarea name="status_repair"><?php echo $data['status_repair']; ?></textarea>
+                </div>
             </td>
         </tr>
     </table>

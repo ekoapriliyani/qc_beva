@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Mengambil data dari form dan memproteksi dari SQL Injection sederhana
     $hari_tgl            = mysqli_real_escape_string($conn, $_POST['hari_tgl']);
     $shift            = mysqli_real_escape_string($conn, $_POST['shift']);
-    $pro                 = mysqli_real_escape_string($conn, $_POST['pro']);
+    $pro_number                 = mysqli_real_escape_string($conn, $_POST['pro_number']);
     $mesin               = mysqli_real_escape_string($conn, $_POST['mesin']);
     $merk                = mysqli_real_escape_string($conn, $_POST['merk']);
     $prod_code           = mysqli_real_escape_string($conn, $_POST['prod_code']);
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $query = "INSERT INTO t_inspeksi_wm (
                 hari_tgl, 
                 shift,
-                pro, 
+                pro_number, 
                 mesin,
                 merk, 
                 prod_code, 
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               ) VALUES (
                 '$hari_tgl', 
                 '$shift', 
-                '$pro', 
+                '$pro_number', 
                 '$mesin', 
                 '$merk', 
                 '$prod_code', 
