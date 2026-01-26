@@ -1,5 +1,6 @@
 <?php 
 include("../koneksi.php"); 
+require_once 'functions.php';
 
 // Ambil ID dari URL
 if (isset($_GET['id'])) {
@@ -18,6 +19,20 @@ if (isset($_GET['id'])) {
     header("Location: index.php");
     exit;
 }
+
+if (isset($_POST["update_wm"])) {
+    if (update_wm($_POST)) {
+        echo "<script>
+            alert('Data berhasil diupdate');
+            window.location.href='index.php';
+        </script>";
+    } else {
+        echo "<script>
+            alert('Data gagal diupdate');
+        </script>";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -139,16 +154,9 @@ if (isset($_GET['id'])) {
     </div>
 
     <!-- <h3 style="border-bottom: 1px solid var(--primary-color); padding-bottom: 5px;">Data Produksi</h3> -->
-    <form action="proses_inspeksi.php" method="post">
+    <form action="" method="post">
     <table class="specs-table">
-        <!-- <tr>
-            <th>Jumlah Sample</th>
-            <td>
-                <input type="number" name="jml_sample_diambil" 
-                       value="<?php echo $data['jml_sample_diambil']; ?>" 
-                       required>
-            </td>
-        </tr> -->
+        <input hidden type="number" name="id" value="<?php echo $data['id_inspeksi']; ?>">
         <tr>
             <th>Jumlah NG</th>
             <td>
@@ -188,7 +196,7 @@ if (isset($_GET['id'])) {
             </td>
         </tr>
     </table>
-    <button type="submit">Simpan</button>
+    <button type="submit" name="update_wm">Update</button>
 </form>
     
     

@@ -39,6 +39,8 @@ if (isset($_POST["save_pro"]) > 0) {
     <form action="" method="POST">
         <label for="">PRO Number</label>
         <input type="text" name="pro_number" required>
+        <label for="">QTY Produksi</label>
+        <input type="number" name="qty_prod">
         <button type="submit" name="save_pro">Simpan</button>
     </form>
 
@@ -144,10 +146,10 @@ if (isset($_POST["save_pro"]) > 0) {
                 <label>Jumlah Sample Diambil</label>
                 <input type="number" name="jml_sample_diambil" min="0" required>
             </div> -->
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label>QTY PRO (Pcs/Roll)</label>
                 <input type="number" name="total_produksi" min="0" required>
-            </div>
+            </div> -->
             <!-- <div class="form-group">
                 <label>Jumlah NG (Reject)</label>
                 <input type="number" name="jml_ng" min="0" value="0">

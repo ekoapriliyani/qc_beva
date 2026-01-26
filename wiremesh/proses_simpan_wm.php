@@ -12,7 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $type_coating        = mysqli_real_escape_string($conn, $_POST['type_coating']);
     $status              = mysqli_real_escape_string($conn, $_POST['status']);
     $jml_sample_diambil  = mysqli_real_escape_string($conn, $_POST['jml_sample_diambil']);
-    $total_produksi      = mysqli_real_escape_string($conn, $_POST['total_produksi']);
     $jml_ng              = mysqli_real_escape_string($conn, $_POST['jml_ng']);
     $status_repair       = mysqli_real_escape_string($conn, $_POST['status_repair']);
 
@@ -27,7 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 type_coating, 
                 status, 
                 jml_sample_diambil, 
-                total_produksi, 
                 jml_ng, 
                 status_repair
               ) VALUES (
@@ -40,7 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 '$type_coating', 
                 '$status', 
                 '$jml_sample_diambil', 
-                '$total_produksi', 
                 '$jml_ng', 
                 '$status_repair'
               )";

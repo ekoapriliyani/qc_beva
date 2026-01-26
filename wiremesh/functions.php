@@ -18,10 +18,30 @@ function tambah_pro($data){
     global $conn;
     
     $pro_number = $data["pro_number"];
-    $query = "INSERT INTO t_pro (pro_number) VALUES('$pro_number')";
+    $qty_prod = $data['qty_prod'];
+    $query = "INSERT INTO t_pro (pro_number, qty_prod) VALUES('$pro_number', '$qty_prod')";
 
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
+}
+
+function update_wm($post) {
+    global $conn;
+
+    $id             = mysqli_real_escape_string($conn, $post['id']);
+    $jml_ng         = mysqli_real_escape_string($conn, $post['jml_ng']);
+    $jml_reject     = mysqli_real_escape_string($conn, $post['jml_reject']);
+    $total_produksi = mysqli_real_escape_string($conn, $post['total_produksi']);
+    $status_repair  = mysqli_real_escape_string($conn, $post['status_repair']);
+
+    $query = "UPDATE t_inspeksi_wm 
+              SET jml_ng = '$jml_ng',
+                  jml_reject = '$jml_reject',
+                  total_produksi = '$total_produksi',
+                  status_repair = '$status_repair'
+              WHERE id_inspeksi = '$id'";
+
+    return mysqli_query($conn, $query);
 }
 
 
