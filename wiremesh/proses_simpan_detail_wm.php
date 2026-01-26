@@ -15,28 +15,41 @@ $userName = $_SESSION["name"];
 $userRole = $_SESSION["role"];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id_inspeksi        = $_POST['id_inspeksi'];
-    $material           = $_POST['material'];
-    $operator_prod           = $_POST['operator_prod'];
-    $material           = $_POST['material'];
-    $d_kawat_act        = $_POST['d_kawat_act'];
-    $p_produk_act       = $_POST['p_produk_act'];
-    $l_produk_act       = $_POST['l_produk_act'];
-    $p_mesh_act         = $_POST['p_mesh_act'];
-    $l_mesh_act         = $_POST['l_mesh_act'];
-    $diagonal           = $_POST['diagonal'];
-    $shear_strght_mpa   = $_POST['shear_strght_mpa'];
-    $torsi_strgh        = $_POST['torsi_strgh'];
-    $visual             = $_POST['visual'];
+    $id_inspeksi      = mysqli_real_escape_string($conn, $_POST['id_inspeksi']);
+    $material         = mysqli_real_escape_string($conn, $_POST['material']);
+    $operator_prod    = mysqli_real_escape_string($conn, $_POST['operator_prod']);
+    $d_kawat_act      = mysqli_real_escape_string($conn, $_POST['d_kawat_act']);
+    $p_produk_act     = mysqli_real_escape_string($conn, $_POST['p_produk_act']);
+    $l_produk_act     = mysqli_real_escape_string($conn, $_POST['l_produk_act']);
+    $p_mesh_act       = mysqli_real_escape_string($conn, $_POST['p_mesh_act']);
+    $l_mesh_act       = mysqli_real_escape_string($conn, $_POST['l_mesh_act']);
+    $diagonal         = mysqli_real_escape_string($conn, $_POST['diagonal']);
+    $shear_strght_mpa = mysqli_real_escape_string($conn, $_POST['shear_strght_mpa']);
+    $torsi_strgh      = mysqli_real_escape_string($conn, $_POST['torsi_strgh']);
+    $visual           = mysqli_real_escape_string($conn, $_POST['visual']);
 
+    // --- Simpan Visual Detail jika ada ---
+    $id_visual_detail = "NULL"; // default jika tidak ada
+    if (!empty($_POST['visual_detail']) || !empty($_POST['keterangan'])) {
+        $visual_detail = mysqli_real_escape_string($conn, $_POST['visual_detail']);
+        $keterangan    = mysqli_real_escape_string($conn, $_POST['keterangan']);
+
+        $sql_visual = "INSERT INTO t_visual_detail (visual_detail, keterangan) 
+                       VALUES ('$visual_detail', '$keterangan')";
+        if (mysqli_query($conn, $sql_visual)) {
+            $id_visual_detail = mysqli_insert_id($conn);
+        }
+    }
+
+    // --- Simpan Detail Inspeksi ---
     $query = "INSERT INTO t_inspeksi_wm_detail (
                 id_inspeksi, material, operator_prod, d_kawat_act, p_produk_act, l_produk_act, 
                 p_mesh_act, l_mesh_act, diagonal, shear_strght_mpa, 
-                torsi_strgh, visual
+                torsi_strgh, visual, id_visual_detail
               ) VALUES (
                 '$id_inspeksi', '$material', '$operator_prod', '$d_kawat_act', '$p_produk_act', '$l_produk_act', 
                 '$p_mesh_act', '$l_mesh_act', '$diagonal', '$shear_strght_mpa', 
-                '$torsi_strgh', '$visual'
+                '$torsi_strgh', '$visual', $id_visual_detail
               )";
 
     if (mysqli_query($conn, $query)) {

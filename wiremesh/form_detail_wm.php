@@ -146,9 +146,23 @@ if (isset($_GET['id'])) {
                     <option value="NG">NG</option>
                 </select>
             </div>
-            <!-- <div class="form-group full-width">
-                <label>Visual Check</label>
-                <select name="visual" required>
+        </div>
+
+        <!-- Tombol untuk membuka form detail visual -->
+            <div class="form-group">
+                <button type="button" id="btnVisualDetail" class="btn btn-info">
+                    <i class="fas fa-eye"></i> Tambah Visual Detail
+                </button>
+            </div>
+
+        <!-- Form tambahan (default hidden) -->
+            <div id="visualDetailForm" style="display:none; margin-top:15px; border:1px solid #ddd; padding:10px; border-radius:5px;">
+                <h4 style="color:var(--primary-color); margin-bottom:10px;">
+                    <i class="fas fa-search"></i> Form Visual Detail
+                </h4>
+                <div class="form-group full-width">
+                    <label>Visual Detail</label>
+                    <select name="visual_detail" required>
                     <option value="0">OK</option>
                     <option value="1">Crack</option>
                     <option value="2">Karat</option>
@@ -158,8 +172,13 @@ if (isset($_GET['id'])) {
                     <option value="6">Mesh</option>
                     <option value="7">Handling</option>
                 </select>
-            </div> -->
-        </div>
+
+                </div>
+                <div class="form-group full-width">
+                    <label>Keterangan</label>
+                    <textarea name="keterangan" placeholder="Tambahkan keterangan"></textarea>
+                </div>
+            </div>
 
         <div class="btn-container">
             <a href="preview.php?id=<?php echo $id_inspeksi; ?>" class="btn btn-cancel">Batal</a>
@@ -167,6 +186,23 @@ if (isset($_GET['id'])) {
         </div>
     </form>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const btnVisualDetail = document.getElementById("btnVisualDetail");
+    const visualDetailForm = document.getElementById("visualDetailForm");
+
+    btnVisualDetail.addEventListener("click", function() {
+        if (visualDetailForm.style.display === "none") {
+            visualDetailForm.style.display = "block";
+            btnVisualDetail.innerHTML = '<i class="fas fa-times"></i> Tutup Visual Detail';
+        } else {
+            visualDetailForm.style.display = "none";
+            btnVisualDetail.innerHTML = '<i class="fas fa-eye"></i> Tambah Visual Detail';
+        }
+    });
+});
+</script>
 
 </body>
 </html>

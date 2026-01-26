@@ -103,50 +103,64 @@ if (isset($_POST["update_wm"])) {
     <div class="table-responsive">
         <table class="specs-table" style="font-size: 12px; margin-top: 10px;">
             <thead>
-                <tr style="background-color: #f9f9f9;">
-                    <th style="width: 1%; text-align: center;">No</th>
-                    <th>Material</th>
-                    <th>Operator</th>
-                    <th>D. Kawat (mm)</th>
-                    <th>P x L Produk (mm)</th>
-                    <th>P x L Mesh (mm)</th>
-                    <th>Slsh Diag (mm)</th>
-                    <th>Shear (MPa)</th>
-                    <th>Torsi</th>
-                    <th>Visual</th>
-                    <th></th>
-                    <th class="btn-print" style="text-align: center;">Aksi</th>
-                </tr>
+                    <tr>
+                        <th>No</th>
+                        <th>Material</th>
+                        <th>Operator</th>
+                        <th>D. Kawat (mm)</th>
+                        <th>P x L Produk (mm)</th>
+                        <th>P x L Mesh (mm)</th>
+                        <th>Selisih Diagonal (mm)</th>
+                        <th>Shear (MPa)</th>
+                        <th>Torsi</th>
+                        <th>Visual</th>
+                        <!-- <th>Visual Detail</th>
+                        <th>Keterangan</th> -->
+                        <th>Created At</th>
+                        <th>Aksi</th>
+                    </tr>
             </thead>
             <tbody>
                 <?php
                 $no = 1;
                 // Query mengambil data dari tabel detail yang berelasi dengan id_inspeksi utama
-                $query_detail = mysqli_query($conn, "SELECT * FROM t_inspeksi_wm_detail WHERE id_inspeksi = '$id' ORDER BY id_detail ASC");
+               $query_detail = mysqli_query($conn, "
+    SELECT d.*, v.visual_detail, v.keterangan 
+    FROM t_inspeksi_wm_detail d
+    LEFT JOIN t_visual_detail v ON d.id_visual_detail = v.id
+    WHERE d.id_inspeksi = '$id'
+    ORDER BY d.id_detail ASC
+");
                 
                 if (mysqli_num_rows($query_detail) > 0) {
                     while ($row_det = mysqli_fetch_assoc($query_detail)) {
-                        echo "<tr>";
-                        echo "<td style='text-align: center;'>".$no++."</td>";
-                        echo "<td>".$row_det['material']."</td>";
-                        echo "<td>".$row_det['operator_prod']."</td>";
-                        echo "<td>".$row_det['d_kawat_act']."</td>";
-                        echo "<td>".$row_det['p_produk_act']." x ".$row_det['l_produk_act']."</td>";
-                        echo "<td>".$row_det['p_mesh_act']." x ".$row_det['l_mesh_act']."</td>";
-                        echo "<td>".$row_det['diagonal']."</td>";
-                        echo "<td>".$row_det['shear_strght_mpa']."</td>";
-                        echo "<td>".$row_det['torsi_strgh']."</td>";
-                        echo "<td>".$row_det['visual']."</td>";
-                        echo "<td>".$row_det['created_at']."</td>";
-                        echo "<td class='btn-print' style='text-align: center;'>
-                                <a href='hapus_detail.php?id_detail=".$row_det['id_detail']."&id_main=$id' 
-                                   style='color: #dc3545;' 
-                                   onclick='return confirm(\"Hapus baris ini?\")'>
-                                   <i class='fas fa-edit'></i>
-                                </a>
-                              </td>";
-                        echo "</tr>";
-                    }
+    echo "<tr>";
+    echo "<td style='text-align: center;'>".$no++."</td>";
+    echo "<td>".$row_det['material']."</td>";
+    echo "<td>".$row_det['operator_prod']."</td>";
+    echo "<td>".$row_det['d_kawat_act']."</td>";
+    echo "<td>".$row_det['p_produk_act']." x ".$row_det['l_produk_act']."</td>";
+    echo "<td>".$row_det['p_mesh_act']." x ".$row_det['l_mesh_act']."</td>";
+    echo "<td>".$row_det['diagonal']."</td>";
+    echo "<td>".$row_det['shear_strght_mpa']."</td>";
+    echo "<td>".$row_det['torsi_strgh']."</td>";
+    echo "<td>".$row_det['visual']."</td>";
+    // echo "<td>".($row_det['visual_detail'] ?? "-")."</td>";
+    // echo "<td>".($row_det['keterangan'] ?? "-")."</td>";
+    echo "<td>".$row_det['created_at']."</td>";
+    echo "<td style='text-align:center;'>
+            <a href='edit_detail.php?id_detail=".$row_det['id_detail']."&id_main=$id' 
+               style='color:#007bff;' title='Edit'>
+               <i class='fas fa-edit'></i>
+            </a>
+            &nbsp;
+            <a href='hapus_detail.php?id_detail=".$row_det['id_detail']."&id_main=$id' 
+               style='color:#dc3545;' onclick='return confirm(\"Hapus baris ini?\")' title='Delete'>
+               <i class='fas fa-trash'></i>
+            </a>
+          </td>";
+    echo "</tr>";
+}
                 } else {
                     echo "<tr><td colspan='9' style='text-align: center; padding: 20px; color: #999;'>Belum ada data sample detail untuk inspeksi ini.</td></tr>";
                 }
