@@ -106,10 +106,11 @@ if (isset($_POST["update_wm"])) {
                 <tr style="background-color: #f9f9f9;">
                     <th style="width: 1%; text-align: center;">No</th>
                     <th>Material</th>
+                    <th>Operator</th>
                     <th>D. Kawat (mm)</th>
                     <th>P x L Produk (mm)</th>
                     <th>P x L Mesh (mm)</th>
-                    <th>Selisih Diagonal (mm)</th>
+                    <th>Slsh Diag (mm)</th>
                     <th>Shear (MPa)</th>
                     <th>Torsi</th>
                     <th>Visual</th>
@@ -128,6 +129,7 @@ if (isset($_POST["update_wm"])) {
                         echo "<tr>";
                         echo "<td style='text-align: center;'>".$no++."</td>";
                         echo "<td>".$row_det['material']."</td>";
+                        echo "<td>".$row_det['operator_prod']."</td>";
                         echo "<td>".$row_det['d_kawat_act']."</td>";
                         echo "<td>".$row_det['p_produk_act']." x ".$row_det['l_produk_act']."</td>";
                         echo "<td>".$row_det['p_mesh_act']." x ".$row_det['l_mesh_act']."</td>";
@@ -154,50 +156,52 @@ if (isset($_POST["update_wm"])) {
     </div>
 
     <!-- <h3 style="border-bottom: 1px solid var(--primary-color); padding-bottom: 5px;">Data Produksi</h3> -->
-    <form action="" method="post">
-    <table class="specs-table">
-        <input hidden type="number" name="id" value="<?php echo $data['id_inspeksi']; ?>">
-        <tr>
-            <th>Jumlah NG</th>
-            <td>
-                <div class="form-group">
-                <input type="number" name="jml_ng" 
-                       value="<?php echo $data['jml_ng']; ?>" 
-                       required>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th>Jumlah Reject</th>
-            <td>
-                <div class="form-group">
-                <input type="number" name="jml_reject" 
-                       value="<?php echo $data['jml_reject']; ?>" 
-                       required>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th>Total Produksi per Shift</th>
-            <td>
-                <div class="form-group">
-                <input type="number" name="total_produksi" 
-                       value="<?php echo $data['total_produksi']; ?>" 
-                       required>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th>Status Repair / Catatan</th>
-            <td>
-                <div class="form-group">
-                <textarea name="status_repair"><?php echo $data['status_repair']; ?></textarea>
-                </div>
-            </td>
-        </tr>
-    </table>
-    <button type="submit" name="update_wm">Update</button>
-</form>
+    <form action="" method="post" id="formInspeksi">
+        <table class="specs-table">
+            <input hidden type="number" name="id" value="<?php echo $data['id_inspeksi']; ?>" readonly>
+            <tr>
+                <th>Jumlah NG</th>
+                <td>
+                    <div class="form-group">
+                        <input type="number" name="jml_ng" 
+                            value="<?php echo $data['jml_ng']; ?>" 
+                            required disabled>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Jumlah Reject</th>
+                <td>
+                    <div class="form-group">
+                        <input type="number" name="jml_reject" 
+                            value="<?php echo $data['jml_reject']; ?>" 
+                            required disabled>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Total Produksi per Shift</th>
+                <td>
+                    <div class="form-group">
+                        <input type="number" name="total_produksi" 
+                            value="<?php echo $data['total_produksi']; ?>" 
+                            required disabled>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Status Repair / Catatan</th>
+                <td>
+                    <div class="form-group">
+                        <textarea name="status_repair" disabled><?php echo $data['status_repair']; ?></textarea>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <button type="button" id="btnEdit">Edit/Ubah</button>
+        <button type="submit" name="update_wm" id="btnUpdate" disabled>Update</button>
+    </form>
     
     
 
@@ -207,5 +211,28 @@ if (isset($_POST["update_wm"])) {
     </div>
 </div>
 
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const btnEdit   = document.getElementById("btnEdit");
+    const btnUpdate = document.getElementById("btnUpdate");
+    const form      = document.getElementById("formInspeksi");
+
+    btnEdit.addEventListener("click", function() {
+        // aktifkan semua input & textarea
+        form.querySelectorAll("input, textarea").forEach(el => {
+            if (el.name !== "id") { // biarkan ID tetap readonly
+                el.removeAttribute("disabled");
+            }
+        });
+
+        // aktifkan tombol update
+        btnUpdate.removeAttribute("disabled");
+
+        // opsional: disable tombol edit agar tidak ditekan lagi
+        btnEdit.setAttribute("disabled", true);
+    });
+});
+</script>
 </body>
 </html>

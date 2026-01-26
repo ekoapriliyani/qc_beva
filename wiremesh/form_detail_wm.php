@@ -1,6 +1,19 @@
 <?php 
 include("../koneksi.php"); 
 
+session_start();
+
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
+
+include_once 'functions.php';
+
+// Ambil data user dari session untuk info di dashboard
+$userName = $_SESSION["name"];
+$userRole = $_SESSION["role"];
+
 if (isset($_GET['id'])) {
     $id_inspeksi = mysqli_real_escape_string($conn, $_GET['id']);
     
@@ -82,6 +95,11 @@ if (isset($_GET['id'])) {
             <div class="form-group full-width">
                 <label for="">Material</label>
                 <input type="text" name="material" autofocus>
+            </div>
+            
+            <div class="form-group full-width">
+                <label for="">Nama Operator Produksi</label>
+                <input type="text" name="operator_prod">
             </div>
 
             <div class="section-title"><i class="fas fa-edit"></i> Hasil Pengukuran Aktual</div>

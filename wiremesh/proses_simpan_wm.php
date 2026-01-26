@@ -1,6 +1,19 @@
 <?php
 include("../koneksi.php");
 
+session_start();
+
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
+
+include_once 'functions.php';
+
+// Ambil data user dari session untuk info di dashboard
+$userName = $_SESSION["name"];
+$userRole = $_SESSION["role"];
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Mengambil data dari form dan memproteksi dari SQL Injection sederhana
     $hari_tgl            = mysqli_real_escape_string($conn, $_POST['hari_tgl']);

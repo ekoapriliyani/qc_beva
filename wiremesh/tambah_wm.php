@@ -1,6 +1,18 @@
 <?php include("../koneksi.php"); 
 require_once 'functions.php';
 
+session_start();
+
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
+
+
+// Ambil data user dari session untuk info di dashboard
+$userName = $_SESSION["name"];
+$userRole = $_SESSION["role"];
+
 if (isset($_POST["save_pro"]) > 0) {
     if (tambah_pro($_POST)) {
         echo "<script>
@@ -49,6 +61,10 @@ if (isset($_POST["save_pro"]) > 0) {
     <form action="proses_simpan_wm.php" method="POST">
         <div class="grid-container">
             <div class="form-group">
+                <label for="Inspector">Inspector</label>
+                <input type="text" name="inspector" value="<?= $userName; ?>" readonly>
+            </div>
+            <div class="form-group">
                 <label>Hari / Tanggal</label>
                 <input type="date" name="hari_tgl" required>
             </div>
@@ -60,11 +76,6 @@ if (isset($_POST["save_pro"]) > 0) {
                     <option value="3">Shift 3</option>
                 </select>
             </div>
-            <!-- <div class="form-group">
-                <label>Nomor PRO</label>
-                <input type="text" name="pro" placeholder="Contoh: PRO202601001" required>
-            </div> -->
-
             <div class="form-group">
                 <label for="">PRO Number</label>
                 <select id="pro_number" name="pro_number" class="form-control" required>
@@ -133,32 +144,6 @@ if (isset($_POST["save_pro"]) > 0) {
                     <option value="EP">EP</option>
                 </select>
             </div>
-
-            <!-- <div class="form-group">
-                <label>Status Inspeksi Akhir</label>
-                <select name="status" required>
-                    <option value="OK">OK</option>
-                    <option value="NG">NG</option>
-                </select>
-            </div> -->
-
-            <!-- <div class="form-group">
-                <label>Jumlah Sample Diambil</label>
-                <input type="number" name="jml_sample_diambil" min="0" required>
-            </div> -->
-            <!-- <div class="form-group">
-                <label>QTY PRO (Pcs/Roll)</label>
-                <input type="number" name="total_produksi" min="0" required>
-            </div> -->
-            <!-- <div class="form-group">
-                <label>Jumlah NG (Reject)</label>
-                <input type="number" name="jml_ng" min="0" value="0">
-            </div> -->
-
-            <!-- <div class="form-group full-width">
-                <label>Status Repair / Keterangan</label>
-                <textarea name="status_repair" rows="3" placeholder="Tulis catatan repair jika ada..."></textarea>
-            </div> -->
         </div>
 
         <div class="btn-container">
@@ -176,6 +161,11 @@ if (isset($_POST["save_pro"]) > 0) {
 $(document).ready(function() {
     $('#prod_code').select2({
         placeholder: "-- Pilih Prod Code --",
+        allowClear: true
+    });
+
+    $('#pro_number').select2({
+        placeholder: "-- Pilih PRO Number --",
         allowClear: true
     });
 });
