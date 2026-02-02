@@ -65,30 +65,30 @@ function update_wm($post) {
 
 
 // fungsi ubah data
-function ubah($data)
-{
-    global $conn;
-    $id = $data["id"];
-    $nama_platform = $data["nama_platform"];
-    $versi = $data["versi"];
-    $deskripsi = $data["deskripsi"];
+// function ubah($data)
+// {
+//     global $conn;
+//     $id = $data["id"];
+//     $nama_platform = $data["nama_platform"];
+//     $versi = $data["versi"];
+//     $deskripsi = $data["deskripsi"];
 
-    $query = "UPDATE platform SET
-        nama_platform = '$nama_platform',
-        versi = '$versi',
-        deskripsi = '$deskripsi'
-        WHERE id = $id
-    ";
+//     $query = "UPDATE platform SET
+//         nama_platform = '$nama_platform',
+//         versi = '$versi',
+//         deskripsi = '$deskripsi'
+//         WHERE id = $id
+//     ";
 
-    mysqli_query($conn, $query);
-    return mysqli_affected_rows($conn);
-}
+//     mysqli_query($conn, $query);
+//     return mysqli_affected_rows($conn);
+// }
 
 
 // fungsi hapus
-function hapus($id)
-{
-    global $conn;
-    mysqli_query($conn, "DELETE FROM platform WHERE id = $id");
-    return mysqli_affected_rows($conn);
-}
+// function hapus($id)
+// {
+//     global $conn;
+//     mysqli_query($conn, "DELETE FROM platform WHERE id = $id");
+//     return mysqli_affected_rows($conn);
+// }

@@ -91,8 +91,21 @@ if (!$data) {
         </div>
         <div class="form-group">
             <label>Visual Detail</label>
-            <input type="text" name="visual_detail" value="<?= htmlspecialchars($data['visual_detail']); ?>">
+            <select name="visual_detail" required>
+                <option value="0" <?= $data['visual_detail']=="0"?"selected":""; ?>>OK</option>
+                <option value="1" <?= $data['visual_detail']=="1"?"selected":""; ?>>Crack</option>
+                <option value="2" <?= $data['visual_detail']=="2"?"selected":""; ?>>Karat</option>
+                <option value="3" <?= $data['visual_detail']=="3"?"selected":""; ?>>Las (Lepas/Tidak ngelas)</option>
+                <option value="4" <?= $data['visual_detail']=="4"?"selected":""; ?>>CW-LW (Pendek/Bengkok/Putus)</option>
+                <option value="5" <?= $data['visual_detail']=="5"?"selected":""; ?>>Triming</option>
+                <option value="6" <?= $data['visual_detail']=="6"?"selected":""; ?>>Mesh</option>
+                <option value="7" <?= $data['visual_detail']=="7"?"selected":""; ?>>Handling</option>
+            </select>
         </div>
+        <!-- <div class="form-group">
+            <label>Visual Detail</label>
+            <input type="text" name="visual_detail" value="<?= htmlspecialchars($data['visual_detail']); ?>">
+        </div> -->
         <div class="form-group">
             <label>Keterangan</label>
             <input type="text" name="keterangan" value="<?= htmlspecialchars($data['keterangan']); ?>">

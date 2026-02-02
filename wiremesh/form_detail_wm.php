@@ -78,10 +78,10 @@ if (isset($_GET['id'])) {
                 <input type="text" class="readonly-field" value="<?php echo $header['d_kawat'] . ' mm'; ?>" readonly>
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label>Jarak Mesh Standar</label>
                 <input type="text" class="readonly-field" value="<?php echo $header['jarak_mesh'] . ' mm'; ?>" readonly>
-            </div>
+            </div> -->
             
             <div class="form-group">
                 <label>P x L Produk Standar</label>
@@ -93,7 +93,7 @@ if (isset($_GET['id'])) {
             </div>
 
             <div class="form-group full-width">
-                <label for="">Material</label>
+                <label for="">Lot ID Material</label>
                 <input type="text" name="material" autofocus>
             </div>
             
@@ -140,7 +140,7 @@ if (isset($_GET['id'])) {
                 </select>
             </div>
             <div class="form-group">
-                <label>Visual Check</label>
+                <label>Status Dimensi</label>
                 <select name="visual" required>
                     <option value="OK">OK</option>
                     <option value="NG">NG</option>
@@ -177,6 +177,10 @@ if (isset($_GET['id'])) {
                 <div class="form-group full-width">
                     <label>Keterangan</label>
                     <textarea name="keterangan" placeholder="Tambahkan keterangan"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="">Jumlah</label>
+                    <input type="number">
                 </div>
             </div>
 

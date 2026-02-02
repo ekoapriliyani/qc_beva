@@ -52,16 +52,21 @@ if (isset($_POST["login"])) {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
-        body {
-            /* Background dengan gradasi maroon industrial */
-            background: linear-gradient(135deg, var(--dark-maroon) 0%, var(--primary-maroon) 100%);
-            background-attachment: fixed;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+       body {
+    /* Background image */
+    background-image: url("img/bg2.png");
+    background-size: cover;      /* Biar memenuhi layar */
+    background-position: center; /* Posisi tengah */
+    background-repeat: no-repeat;
+
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
 
         .login-container {
             width: 100%;
@@ -193,8 +198,8 @@ if (isset($_POST["login"])) {
     <div class="login-container">
         <div class="login-box">
             <div class="logo-area">
-                <!-- <i class="fas fa-shield-halved"></i> -->
-                <img src="img/logo_beva.png" alt="logobeva">
+                <i class="fas fa-shield-halved"></i>
+                <!-- <img src="img/beva.png" alt="logobeva"> -->
             </div>
 
             <h2>QC SYSTEM</h2>
@@ -223,7 +228,7 @@ if (isset($_POST["login"])) {
                 </button>
             </form>
 
-            <p class="footer-text">&copy; 2026 Internal QC System - v2.0</p>
+            <p class="footer-text">&copy; 2026 - Bevananda IT Dept </p>
         </div>
     </div>
 

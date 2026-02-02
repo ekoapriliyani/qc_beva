@@ -7,7 +7,10 @@ if (isset($_GET['id'])) {
     $id = mysqli_real_escape_string($conn, $_GET['id']);
     
     // Query ambil data detail
-    $query = "SELECT * FROM t_inspeksi_wm WHERE id_inspeksi = '$id'";
+    $query = "SELECT * FROM t_inspeksi_wm 
+    JOIN t_pro ON t_pro.pro_number = t_inspeksi_wm.pro_number 
+    WHERE id_inspeksi = '$id'";
+    
     $result = mysqli_query($conn, $query);
     $data = mysqli_fetch_assoc($result);
 
@@ -24,7 +27,7 @@ if (isset($_POST["update_wm"])) {
     if (update_wm($_POST)) {
         echo "<script>
             alert('Data berhasil diupdate');
-            window.location.href='index.php';
+            window.location.href='preview.php?id=$id';
         </script>";
     } else {
         echo "<script>
@@ -80,7 +83,7 @@ if (isset($_POST["update_wm"])) {
         </div>
         <div class="info-box">
             <h4>QTY PRO</h4>
-            <p><?php echo $data['total_produksi']; ?></p>
+            <p><?php echo $data['qty_prod']; ?></p>
         </div>
         <div class="info-box">
             <h4>Mesin</h4>
@@ -97,7 +100,7 @@ if (isset($_POST["update_wm"])) {
     </table>
 
     <h3 style="border-bottom: 1px solid var(--primary-color); padding-bottom: 5px; margin-top: 40px; color: var(--primary-color);">
-        <i class="fas fa-list-ol"></i> Daftar Hasil Pengukuran (Sample Detail)
+        <i class="fas fa-list-ol"></i> Hasil Inspeksi (WIP)
     </h3>
     
     <div class="table-responsive">
@@ -113,7 +116,7 @@ if (isset($_POST["update_wm"])) {
                         <th>Selisih Diagonal (mm)</th>
                         <th>Shear (MPa)</th>
                         <th>Torsi</th>
-                        <th>Visual</th>
+                        <th>Dimensi</th>
                         <!-- <th>Visual Detail</th>
                         <th>Keterangan</th> -->
                         <th>Created At</th>
@@ -124,43 +127,43 @@ if (isset($_POST["update_wm"])) {
                 <?php
                 $no = 1;
                 // Query mengambil data dari tabel detail yang berelasi dengan id_inspeksi utama
-               $query_detail = mysqli_query($conn, "
-    SELECT d.*, v.visual_detail, v.keterangan 
-    FROM t_inspeksi_wm_detail d
-    LEFT JOIN t_visual_detail v ON d.id_visual_detail = v.id
-    WHERE d.id_inspeksi = '$id'
-    ORDER BY d.id_detail ASC
-");
+                $query_detail = mysqli_query($conn, "
+                    SELECT d.*, v.visual_detail, v.keterangan 
+                    FROM t_inspeksi_wm_detail d
+                    LEFT JOIN t_visual_detail v ON d.id_visual_detail = v.id
+                    WHERE d.id_inspeksi = '$id'
+                    ORDER BY d.id_detail ASC
+                ");
                 
                 if (mysqli_num_rows($query_detail) > 0) {
                     while ($row_det = mysqli_fetch_assoc($query_detail)) {
-    echo "<tr>";
-    echo "<td style='text-align: center;'>".$no++."</td>";
-    echo "<td>".$row_det['material']."</td>";
-    echo "<td>".$row_det['operator_prod']."</td>";
-    echo "<td>".$row_det['d_kawat_act']."</td>";
-    echo "<td>".$row_det['p_produk_act']." x ".$row_det['l_produk_act']."</td>";
-    echo "<td>".$row_det['p_mesh_act']." x ".$row_det['l_mesh_act']."</td>";
-    echo "<td>".$row_det['diagonal']."</td>";
-    echo "<td>".$row_det['shear_strght_mpa']."</td>";
-    echo "<td>".$row_det['torsi_strgh']."</td>";
-    echo "<td>".$row_det['visual']."</td>";
-    // echo "<td>".($row_det['visual_detail'] ?? "-")."</td>";
-    // echo "<td>".($row_det['keterangan'] ?? "-")."</td>";
-    echo "<td>".$row_det['created_at']."</td>";
-    echo "<td style='text-align:center;'>
-            <a href='edit_detail.php?id_detail=".$row_det['id_detail']."&id_main=$id' 
-               style='color:#007bff;' title='Edit'>
-               <i class='fas fa-edit'></i>
-            </a>
-            &nbsp;
-            <a href='hapus_detail.php?id_detail=".$row_det['id_detail']."&id_main=$id' 
-               style='color:#dc3545;' onclick='return confirm(\"Hapus baris ini?\")' title='Delete'>
-               <i class='fas fa-trash'></i>
-            </a>
-          </td>";
-    echo "</tr>";
-}
+                    echo "<tr>";
+                    echo "<td style='text-align: center;'>".$no++."</td>";
+                    echo "<td>".$row_det['material']."</td>";
+                    echo "<td>".$row_det['operator_prod']."</td>";
+                    echo "<td>".$row_det['d_kawat_act']."</td>";
+                    echo "<td>".$row_det['p_produk_act']." x ".$row_det['l_produk_act']."</td>";
+                    echo "<td>".$row_det['p_mesh_act']." x ".$row_det['l_mesh_act']."</td>";
+                    echo "<td>".$row_det['diagonal']."</td>";
+                    echo "<td>".$row_det['shear_strght_mpa']."</td>";
+                    echo "<td>".$row_det['torsi_strgh']."</td>";
+                    echo "<td>".$row_det['visual']."</td>";
+                    // echo "<td>".($row_det['visual_detail'] ?? "-")."</td>";
+                    // echo "<td>".($row_det['keterangan'] ?? "-")."</td>";
+                    echo "<td>".$row_det['created_at']."</td>";
+                    echo "<td style='text-align:center;'>
+                            <a href='edit_detail.php?id_detail=".$row_det['id_detail']."&id_main=$id' 
+                            style='color:#007bff;' title='Edit'>
+                            <i class='fas fa-edit'></i>
+                            </a>
+                            &nbsp;
+                            <a href='hapus_detail.php?id_detail=".$row_det['id_detail']."&id_main=$id' 
+                            style='color:#dc3545;' onclick='return confirm(\"Hapus baris ini?\")' title='Delete'>
+                            <i class='fas fa-trash'></i>
+                            </a>
+                        </td>";
+                    echo "</tr>";
+                }
                 } else {
                     echo "<tr><td colspan='9' style='text-align: center; padding: 20px; color: #999;'>Belum ada data sample detail untuk inspeksi ini.</td></tr>";
                 }
@@ -168,6 +171,34 @@ if (isset($_POST["update_wm"])) {
             </tbody>
         </table>
     </div>
+
+     <h3 style="border-bottom: 1px solid var(--primary-color); padding-bottom: 5px; margin-top: 40px; color: var(--primary-color);">
+        <i class="fas fa-list-ol"></i> Hasil Inspeksi (Finish Good)
+    </h3>
+
+        <div class="table-responsive">
+        <table class="specs-table" style="font-size: 12px; margin-top: 10px;">
+            <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Visual</th>
+                        <th>Batch Number</th>
+                        <th>Status (NG/Reject)</th>
+                        <th>Created At</th>
+                        <th>Aksi</th>
+                    </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+
+    <br><br><hr>
+    <h3 style="border-bottom: 1px solid var(--primary-color); padding-bottom: 5px; margin-top: 40px; color: var(--primary-color);">
+        <i class="fas fa-list-ol"></i> Pengecekan Hasil Repair Produksi
+    </h3>
+    <br><hr><br>
 
     <!-- <h3 style="border-bottom: 1px solid var(--primary-color); padding-bottom: 5px;">Data Produksi</h3> -->
     <form action="" method="post" id="formInspeksi">
@@ -204,7 +235,7 @@ if (isset($_POST["update_wm"])) {
                 </td>
             </tr>
             <tr>
-                <th>Status Repair / Catatan</th>
+                <th>Catatan</th>
                 <td>
                     <div class="form-group">
                         <textarea name="status_repair" disabled><?php echo $data['status_repair']; ?></textarea>
@@ -220,7 +251,7 @@ if (isset($_POST["update_wm"])) {
     
 
     <div style="margin-top: 30px; display: flex; gap: 10px;">
-        <button onclick="window.print()" class="btn btn-submit btn-print"><i class="fas fa-print"></i> Cetak Laporan</button>
+        <!-- <button onclick="window.print()" class="btn btn-submit btn-print"><i class="fas fa-print"></i> Cetak Laporan</button> -->
         <a href="index.php" class="btn btn-cancel btn-print">Tutup</a>
     </div>
 </div>
