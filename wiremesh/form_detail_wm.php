@@ -128,10 +128,10 @@ if (isset($_GET['id'])) {
                 <label>Selisih Diagonal (mm)</label>
                 <input type="number" name="diagonal" required>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label>Shear Strength (MPa)</label>
                 <input type="number" step="0.1" name="shear_strght_mpa" required>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label>Torsi Strength</label>
                 <select name="torsi_strgh" required>

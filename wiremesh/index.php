@@ -55,11 +55,9 @@ $wiremesh = query("SELECT *
                     <th>Merk</th>
                     <th>Product Code</th>
                     <th>Coating</th>
-                    <!-- <th>Status</th> -->
-                    <!-- <th>Sample</th> -->
+                    <th>Shear Strength</th>
                     <th>Total Prod</th>
                     <th>NG</th>
-                    <!-- <th>Repair</th> -->
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -75,6 +73,7 @@ $wiremesh = query("SELECT *
                         <td><?= $row['merk']; ?></td>
                         <td><?= $row['prod_code']; ?></td>
                         <td><?= $row['type_coating']; ?></td>
+                        <td><?= $row['shear_stg']; ?></td>
                         <td><?= $row['total_produksi']; ?></td>
                         <td><?= $row['jml_ng']; ?></td>
                         <td>

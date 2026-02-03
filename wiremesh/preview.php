@@ -97,6 +97,7 @@ if (isset($_POST["update_wm"])) {
     <table class="specs-table">
         <tr><th>Product Name</th><td><?php echo $data['prod_code']; ?></td></tr>
         <tr><th>Type Coating</th><td><?php echo $data['type_coating']; ?></td></tr>
+        <tr><th>Shear Strength</th><td><?php echo $data['shear_stg'] . ' MPa'; ?></td></tr>
     </table>
 
     <h3 style="border-bottom: 1px solid var(--primary-color); padding-bottom: 5px; margin-top: 40px; color: var(--primary-color);">
@@ -114,7 +115,6 @@ if (isset($_POST["update_wm"])) {
                         <th>P x L Produk (mm)</th>
                         <th>P x L Mesh (mm)</th>
                         <th>Selisih Diagonal (mm)</th>
-                        <th>Shear (MPa)</th>
                         <th>Torsi</th>
                         <th>Dimensi</th>
                         <!-- <th>Visual Detail</th>
@@ -145,7 +145,6 @@ if (isset($_POST["update_wm"])) {
                     echo "<td>".$row_det['p_produk_act']." x ".$row_det['l_produk_act']."</td>";
                     echo "<td>".$row_det['p_mesh_act']." x ".$row_det['l_mesh_act']."</td>";
                     echo "<td>".$row_det['diagonal']."</td>";
-                    echo "<td>".$row_det['shear_strght_mpa']."</td>";
                     echo "<td>".$row_det['torsi_strgh']."</td>";
                     echo "<td>".$row_det['visual']."</td>";
                     // echo "<td>".($row_det['visual_detail'] ?? "-")."</td>";

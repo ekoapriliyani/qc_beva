@@ -116,22 +116,20 @@ if (isset($_POST["save_pro"]) > 0) {
             </div>
 
             <div class="form-group">
-    <label>Product Name</label>
-    <select id="prod_code" name="prod_code" class="form-control" required>
-        <option value="">-- Pilih Prod Code --</option>
-        <?php
-        $query_produk = "SELECT prod_code FROM t_produk ORDER BY prod_code ASC";
-        $result_produk = mysqli_query($conn, $query_produk);
-        if ($result_produk && mysqli_num_rows($result_produk) > 0) {
-            while ($row_produk = mysqli_fetch_assoc($result_produk)) {
-                echo '<option value="' . $row_produk['prod_code'] . '">' . $row_produk['prod_code'] . '</option>';
-            }
-        }
-        ?>
-    </select>
-</div>
-
-            
+                <label>Product Name</label>
+                <select id="prod_code" name="prod_code" class="form-control" required>
+                    <option value="">-- Pilih Prod Code --</option>
+                    <?php
+                    $query_produk = "SELECT prod_code FROM t_produk ORDER BY prod_code ASC";
+                    $result_produk = mysqli_query($conn, $query_produk);
+                    if ($result_produk && mysqli_num_rows($result_produk) > 0) {
+                        while ($row_produk = mysqli_fetch_assoc($result_produk)) {
+                            echo '<option value="' . $row_produk['prod_code'] . '">' . $row_produk['prod_code'] . '</option>';
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
             <div class="form-group">
                 <label>Type Coating</label>
                 <select name="type_coating" required>
@@ -143,6 +141,11 @@ if (isset($_POST["save_pro"]) > 0) {
                     <option value="BLACK">BLACK</option>
                     <option value="EP">EP</option>
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label for="">Shear Strength</label>
+                <input type="number" name="shear_stg">
             </div>
         </div>
 

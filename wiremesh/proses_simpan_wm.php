@@ -17,12 +17,13 @@ $userRole = $_SESSION["role"];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Mengambil data dari form dan memproteksi dari SQL Injection sederhana
     $hari_tgl            = mysqli_real_escape_string($conn, $_POST['hari_tgl']);
-    $shift            = mysqli_real_escape_string($conn, $_POST['shift']);
-    $pro_number                 = mysqli_real_escape_string($conn, $_POST['pro_number']);
+    $shift               = mysqli_real_escape_string($conn, $_POST['shift']);
+    $pro_number          = mysqli_real_escape_string($conn, $_POST['pro_number']);
     $mesin               = mysqli_real_escape_string($conn, $_POST['mesin']);
     $merk                = mysqli_real_escape_string($conn, $_POST['merk']);
     $prod_code           = mysqli_real_escape_string($conn, $_POST['prod_code']);
     $type_coating        = mysqli_real_escape_string($conn, $_POST['type_coating']);
+    $shear_stg           = mysqli_real_escape_string($conn, $_POST['shear_stg']);
     $status              = mysqli_real_escape_string($conn, $_POST['status']);
     $jml_sample_diambil  = mysqli_real_escape_string($conn, $_POST['jml_sample_diambil']);
     $jml_ng              = mysqli_real_escape_string($conn, $_POST['jml_ng']);
@@ -37,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 merk, 
                 prod_code, 
                 type_coating, 
+                shear_stg,
                 status, 
                 jml_sample_diambil, 
                 jml_ng, 
@@ -48,7 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 '$mesin', 
                 '$merk', 
                 '$prod_code', 
-                '$type_coating', 
+                '$type_coating',
+                '$shear_stg', 
                 '$status', 
                 '$jml_sample_diambil', 
                 '$jml_ng', 

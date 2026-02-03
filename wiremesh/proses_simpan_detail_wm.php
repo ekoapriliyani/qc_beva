@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $p_mesh_act       = mysqli_real_escape_string($conn, $_POST['p_mesh_act']);
     $l_mesh_act       = mysqli_real_escape_string($conn, $_POST['l_mesh_act']);
     $diagonal         = mysqli_real_escape_string($conn, $_POST['diagonal']);
-    $shear_strght_mpa = mysqli_real_escape_string($conn, $_POST['shear_strght_mpa']);
+    
     $torsi_strgh      = mysqli_real_escape_string($conn, $_POST['torsi_strgh']);
     $visual           = mysqli_real_escape_string($conn, $_POST['visual']);
 
@@ -44,11 +44,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // --- Simpan Detail Inspeksi ---
     $query = "INSERT INTO t_inspeksi_wm_detail (
                 id_inspeksi, material, operator_prod, d_kawat_act, p_produk_act, l_produk_act, 
-                p_mesh_act, l_mesh_act, diagonal, shear_strght_mpa, 
+                p_mesh_act, l_mesh_act, diagonal,  
                 torsi_strgh, visual, id_visual_detail
               ) VALUES (
                 '$id_inspeksi', '$material', '$operator_prod', '$d_kawat_act', '$p_produk_act', '$l_produk_act', 
-                '$p_mesh_act', '$l_mesh_act', '$diagonal', '$shear_strght_mpa', 
+                '$p_mesh_act', '$l_mesh_act', '$diagonal',
                 '$torsi_strgh', '$visual', $id_visual_detail
               )";
 
