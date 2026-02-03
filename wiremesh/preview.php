@@ -117,8 +117,6 @@ if (isset($_POST["update_wm"])) {
                         <th>Selisih Diagonal (mm)</th>
                         <th>Torsi</th>
                         <th>Dimensi</th>
-                        <!-- <th>Visual Detail</th>
-                        <th>Keterangan</th> -->
                         <th>Created At</th>
                         <th>Aksi</th>
                     </tr>
@@ -147,8 +145,6 @@ if (isset($_POST["update_wm"])) {
                     echo "<td>".$row_det['diagonal']."</td>";
                     echo "<td>".$row_det['torsi_strgh']."</td>";
                     echo "<td>".$row_det['visual']."</td>";
-                    // echo "<td>".($row_det['visual_detail'] ?? "-")."</td>";
-                    // echo "<td>".($row_det['keterangan'] ?? "-")."</td>";
                     echo "<td>".$row_det['created_at']."</td>";
                     echo "<td style='text-align:center;'>
                             <a href='edit_detail.php?id_detail=".$row_det['id_detail']."&id_main=$id' 
@@ -170,28 +166,60 @@ if (isset($_POST["update_wm"])) {
             </tbody>
         </table>
     </div>
+    <hr><br><br>
 
-     <h3 style="border-bottom: 1px solid var(--primary-color); padding-bottom: 5px; margin-top: 40px; color: var(--primary-color);">
+    
+    <div>
+        <a href="form_detail_wm_fg.php?id=<?php echo $data['id_inspeksi']; ?>" class="btn-add" style="background-color: var(--primary-color); color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-size: 14px;">
+            <i class="fas fa-plus-circle"></i> Tambah Inspeksi Finish Good
+        </a>
+    </div>
+    <h3 style="border-bottom: 1px solid var(--primary-color); padding-bottom: 5px; margin-top: 40px; color: var(--primary-color);">
         <i class="fas fa-list-ol"></i> Hasil Inspeksi (Finish Good)
     </h3>
 
         <div class="table-responsive">
-        <table class="specs-table" style="font-size: 12px; margin-top: 10px;">
-            <thead>
+            <table class="specs-table">
+                <thead>
                     <tr>
                         <th>No</th>
-                        <th>Visual</th>
+                        <th>Visual Detail</th>
                         <th>Batch Number</th>
-                        <th>Status (NG/Reject)</th>
+                        <th>Status</th>
                         <th>Created At</th>
                         <th>Aksi</th>
                     </tr>
-            </thead>
-            <tbody>
-                
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    <?php
+                    $no = 1;
+                    $query_fg = mysqli_query($conn, "SELECT * FROM t_inspeksi_wm_fg WHERE id_inspeksi='$id' ORDER BY id_fg ASC");
+                    if (mysqli_num_rows($query_fg) > 0) {
+                        while ($row_fg = mysqli_fetch_assoc($query_fg)) {
+                            echo "<tr>";
+                            echo "<td>".$no++."</td>";
+                            echo "<td>".$row_fg['visual_detail']."</td>";
+                            echo "<td>".$row_fg['batch_number']."</td>";
+                            echo "<td>".$row_fg['status']."</td>";
+                            echo "<td>".$row_fg['created_at']."</td>";
+                            echo "<td style='text-align:center;'>
+                                    <a href='edit_fg.php?id_fg=".$row_fg['id_fg']."&id_main=$id' style='color:#007bff;' title='Edit'>
+                                        <i class='fas fa-edit'></i>
+                                    </a>
+                                    &nbsp;
+                                    <a href='hapus_fg.php?id_fg=".$row_fg['id_fg']."&id_main=$id' style='color:#dc3545;' onclick='return confirm(\"Hapus data ini?\")' title='Delete'>
+                                        <i class='fas fa-trash'></i>
+                                    </a>
+                                </td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='6' style='text-align:center; padding:20px; color:#999;'>Belum ada data Finish Good.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
 
     <br><br><hr>
     <h3 style="border-bottom: 1px solid var(--primary-color); padding-bottom: 5px; margin-top: 40px; color: var(--primary-color);">
@@ -199,7 +227,6 @@ if (isset($_POST["update_wm"])) {
     </h3>
     <br><hr><br>
 
-    <!-- <h3 style="border-bottom: 1px solid var(--primary-color); padding-bottom: 5px;">Data Produksi</h3> -->
     <form action="" method="post" id="formInspeksi">
         <table class="specs-table">
             <input hidden type="number" name="id" value="<?php echo $data['id_inspeksi']; ?>" readonly>
@@ -247,8 +274,6 @@ if (isset($_POST["update_wm"])) {
         <button type="submit" name="update_wm" id="btnUpdate" disabled>Update</button>
     </form>
     
-    
-
     <div style="margin-top: 30px; display: flex; gap: 10px;">
         <!-- <button onclick="window.print()" class="btn btn-submit btn-print"><i class="fas fa-print"></i> Cetak Laporan</button> -->
         <a href="index.php" class="btn btn-cancel btn-print">Tutup</a>

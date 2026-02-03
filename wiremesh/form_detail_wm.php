@@ -61,28 +61,19 @@ if (isset($_GET['id'])) {
     <form action="proses_simpan_detail_wm.php" method="POST">
         <input type="hidden" name="id_inspeksi" value="<?php echo $id_inspeksi; ?>">
         <div class="grid-container">
-            <div class="section-title"><i class="fas fa-info-circle"></i> Standar Referensi (Tabel Produk)</div>
-            
+            <div class="section-title"><i class="fas fa-info-circle"></i> Standar Referensi (Tabel Produk)</div>        
             <div class="form-group">
                 <label for="">PRO Number</label>
                 <input type="text" class="readonly-field" value="<?=  $header['pro_number']; ?>" readonly>
             </div>
-
             <div class="form-group">
                 <label>Product Code</label>
                 <input type="text" class="readonly-field" value="<?php echo $header['prod_code']; ?>" readonly>
             </div>
-
             <div class="form-group">
                 <label>D. Kawat Standard (Tol: <?php echo $header['tol_min']; ?> / <?php echo $header['tol_plus']; ?>)</label>
                 <input type="text" class="readonly-field" value="<?php echo $header['d_kawat'] . ' mm'; ?>" readonly>
-            </div>
-
-            <!-- <div class="form-group">
-                <label>Jarak Mesh Standar</label>
-                <input type="text" class="readonly-field" value="<?php echo $header['jarak_mesh'] . ' mm'; ?>" readonly>
-            </div> -->
-            
+            </div>            
             <div class="form-group">
                 <label>P x L Produk Standar</label>
                 <input type="text" class="readonly-field" value="<?php echo $header['p_produk'] . ' x ' . $header['l_produk'] . ' mm'; ?>" readonly>
@@ -91,19 +82,15 @@ if (isset($_GET['id'])) {
                 <label>P x L Mesh Standar</label>
                 <input type="text" class="readonly-field" value="<?php echo $header['p_mesh'] . ' x ' . $header['l_mesh'] . ' mm'; ?>" readonly>
             </div>
-
             <div class="form-group full-width">
                 <label for="">Lot ID Material</label>
                 <input type="text" name="material" autofocus>
-            </div>
-            
+            </div>      
             <div class="form-group full-width">
                 <label for="">Nama Operator Produksi</label>
                 <input type="text" name="operator_prod">
             </div>
-
             <div class="section-title"><i class="fas fa-edit"></i> Hasil Pengukuran Aktual</div>
-
             <div class="form-group full-width">
                 <label>Diameter Kawat Act (mm)</label>
                 <input type="number" step="0.01" name="d_kawat_act" required>
@@ -128,10 +115,6 @@ if (isset($_GET['id'])) {
                 <label>Selisih Diagonal (mm)</label>
                 <input type="number" name="diagonal" required>
             </div>
-            <!-- <div class="form-group">
-                <label>Shear Strength (MPa)</label>
-                <input type="number" step="0.1" name="shear_strght_mpa" required>
-            </div> -->
             <div class="form-group">
                 <label>Torsi Strength</label>
                 <select name="torsi_strgh" required>
@@ -171,8 +154,7 @@ if (isset($_GET['id'])) {
                     <option value="5">Triming</option>
                     <option value="6">Mesh</option>
                     <option value="7">Handling</option>
-                </select>
-
+                    </select>
                 </div>
                 <div class="form-group full-width">
                     <label>Keterangan</label>
