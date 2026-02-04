@@ -19,7 +19,7 @@ if (isset($_GET['id'])) {
     
     // Query JOIN untuk mengambil data Inspeksi dan Detail Produk (termasuk prod_code)
     $sql = "SELECT h.*, p.prod_code, p.jarak_mesh, p.d_kawat, p.tol_min, p.tol_plus, 
-                   p.p_produk, p.l_produk, p.p_mesh, p.l_mesh 
+                   p.p_produk, p.l_produk, p.p_mesh, p.l_mesh, p.tol
             FROM t_inspeksi_wm h
             JOIN t_produk p ON h.prod_code = p.prod_code
             WHERE h.id_inspeksi = '$id_inspeksi'";
@@ -82,6 +82,10 @@ if (isset($_GET['id'])) {
                 <label>P x L Mesh Standar</label>
                 <input type="text" class="readonly-field" value="<?php echo $header['p_mesh'] . ' x ' . $header['l_mesh'] . ' mm'; ?>" readonly>
             </div>
+            <div class="form-group">
+                <label>Toleransi P x L</label>
+                <input type="text" class="readonly-field" value="<?= '± '. $header['tol'] . ' mm'; ?>" readonly>
+            </div>
             <div class="form-group full-width">
                 <label for="">Lot ID Material</label>
                 <input type="text" name="material" autofocus>
@@ -124,7 +128,7 @@ if (isset($_GET['id'])) {
             </div>
             <div class="form-group">
                 <label>Status Dimensi</label>
-                <select name="visual" required>
+                <select name="status_dimensi" id="status_dimensi" required>
                     <option value="OK">OK</option>
                     <option value="NG">NG</option>
                 </select>
@@ -174,6 +178,62 @@ if (isset($_GET['id'])) {
 </div>
 
 <script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    const dKawatAct   = document.querySelector("input[name='d_kawat_act']");
+    const pMeshAct    = document.querySelector("input[name='p_mesh_act']");
+    const lMeshAct    = document.querySelector("input[name='l_mesh_act']");
+    const torsiStrgh  = document.querySelector("select[name='torsi_strgh']");
+    const statusDimensi = document.getElementById("status_dimensi");
+
+    // ambil nilai standar & toleransi dari PHP
+    const dStandar   = parseFloat("<?= $header['d_kawat']; ?>");
+    const tolMin     = parseFloat("<?= $header['tol_min']; ?>");
+    const tolPlus    = parseFloat("<?= $header['tol_plus']; ?>");
+    const pMeshStd   = parseFloat("<?= $header['p_mesh']; ?>");
+    const lMeshStd   = parseFloat("<?= $header['l_mesh']; ?>");
+    const tolPL      = parseFloat("<?= $header['tol']; ?>"); // toleransi P x L
+
+    function checkStatus() {
+        let status = "OK";
+
+        // cek diameter
+        const dVal = parseFloat(dKawatAct.value);
+        if (!isNaN(dVal)) {
+            const min = dStandar - tolMin;
+            const max = dStandar + tolPlus;
+            if (dVal < min || dVal > max) status = "NG";
+        }
+
+        // cek panjang mesh
+        const pMeshVal = parseFloat(pMeshAct.value);
+        if (!isNaN(pMeshVal)) {
+            if (pMeshVal < (pMeshStd - tolPL) || pMeshVal > (pMeshStd + tolPL)) status = "NG";
+        }
+
+        // cek lebar mesh
+        const lMeshVal = parseFloat(lMeshAct.value);
+        if (!isNaN(lMeshVal)) {
+            if (lMeshVal < (lMeshStd - tolPL) || lMeshVal > (lMeshStd + tolPL)) status = "NG";
+        }
+
+        // cek torsi strength
+        if (torsiStrgh.value === "NG") {
+            status = "NG";
+        }
+
+        statusDimensi.value = status;
+    }
+
+    // event listener untuk semua input
+    [dKawatAct, pMeshAct, lMeshAct].forEach(el => {
+        el.addEventListener("input", checkStatus);
+    });
+    torsiStrgh.addEventListener("change", checkStatus);
+});
+
+
+
 document.addEventListener("DOMContentLoaded", function() {
     const btnVisualDetail = document.getElementById("btnVisualDetail");
     const visualDetailForm = document.getElementById("visualDetailForm");

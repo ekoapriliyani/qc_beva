@@ -111,10 +111,10 @@ if (isset($_POST["update_wm"])) {
                         <th>No</th>
                         <th>Material</th>
                         <th>Operator</th>
-                        <th>D. Kawat (mm)</th>
+                        <th>⌀ Kawat (mm)</th>
                         <th>P x L Produk (mm)</th>
                         <th>P x L Mesh (mm)</th>
-                        <th>Selisih Diagonal (mm)</th>
+                        <th>Δ Diagonal (mm)</th>
                         <th>Torsi</th>
                         <th>Dimensi</th>
                         <th>Created At</th>
@@ -144,7 +144,7 @@ if (isset($_POST["update_wm"])) {
                     echo "<td>".$row_det['p_mesh_act']." x ".$row_det['l_mesh_act']."</td>";
                     echo "<td>".$row_det['diagonal']."</td>";
                     echo "<td>".$row_det['torsi_strgh']."</td>";
-                    echo "<td>".$row_det['visual']."</td>";
+                    echo "<td>".$row_det['status_dimensi']."</td>";
                     echo "<td>".$row_det['created_at']."</td>";
                     echo "<td style='text-align:center;'>
                             <a href='edit_detail.php?id_detail=".$row_det['id_detail']."&id_main=$id' 
@@ -186,6 +186,7 @@ if (isset($_POST["update_wm"])) {
                         <th>Visual Detail</th>
                         <th>Batch Number</th>
                         <th>Status</th>
+                        <th>QTY/Roll</th>
                         <th>Created At</th>
                         <th>Aksi</th>
                     </tr>
@@ -201,6 +202,7 @@ if (isset($_POST["update_wm"])) {
                             echo "<td>".$row_fg['visual_detail']."</td>";
                             echo "<td>".$row_fg['batch_number']."</td>";
                             echo "<td>".$row_fg['status']."</td>";
+                            echo "<td>".$row_fg['qty']."</td>";
                             echo "<td>".$row_fg['created_at']."</td>";
                             echo "<td style='text-align:center;'>
                                     <a href='edit_fg.php?id_fg=".$row_fg['id_fg']."&id_main=$id' style='color:#007bff;' title='Edit'>

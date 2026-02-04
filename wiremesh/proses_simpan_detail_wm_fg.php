@@ -12,11 +12,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $visual_detail = mysqli_real_escape_string($conn, $_POST['visual_detail']);
     $batch_number  = mysqli_real_escape_string($conn, $_POST['batch_number']);
     $status        = mysqli_real_escape_string($conn, $_POST['status']);
+    $qty           = mysqli_real_escape_string($conn, $_POST['qty']);
 
     $query = "INSERT INTO t_inspeksi_wm_fg (
-                id_inspeksi, visual_detail, batch_number, status, created_at
+                id_inspeksi, visual_detail, batch_number, status, qty, created_at
               ) VALUES (
-                '$id_inspeksi', '$visual_detail', '$batch_number', '$status', NOW()
+                '$id_inspeksi', '$visual_detail', '$batch_number', '$status', '$qty', NOW()
               )";
 
     if (mysqli_query($conn, $query)) {

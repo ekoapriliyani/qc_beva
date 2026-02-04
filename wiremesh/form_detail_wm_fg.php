@@ -61,7 +61,7 @@ if (isset($_GET['id'])) {
     <form action="proses_simpan_detail_wm_fg.php" method="POST">
         <input type="hidden" name="id_inspeksi" value="<?php echo $id_inspeksi; ?>">
         <div class="grid-container">
-            <div class="form-group full-width">
+            <div class="form-group">
                 <label>Visual Detail</label>
                 <select name="visual_detail" required>
                     <option value="0">OK</option>
@@ -85,6 +85,10 @@ if (isset($_GET['id'])) {
                     <option value="NG">NG</option>
                     <option value="REJECT">REJECT</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <label for="QTY">QTY</label>
+                <input type="number" name="qty">
             </div>
         </div>
         <div class="btn-container">

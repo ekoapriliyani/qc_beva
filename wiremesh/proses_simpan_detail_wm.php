@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $diagonal         = mysqli_real_escape_string($conn, $_POST['diagonal']);
     
     $torsi_strgh      = mysqli_real_escape_string($conn, $_POST['torsi_strgh']);
-    $visual           = mysqli_real_escape_string($conn, $_POST['visual']);
+    $status_dimensi           = mysqli_real_escape_string($conn, $_POST['status_dimensi']);
 
     // --- Simpan Visual Detail jika ada ---
     $id_visual_detail = "NULL"; // default jika tidak ada
@@ -45,11 +45,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $query = "INSERT INTO t_inspeksi_wm_detail (
                 id_inspeksi, material, operator_prod, d_kawat_act, p_produk_act, l_produk_act, 
                 p_mesh_act, l_mesh_act, diagonal,  
-                torsi_strgh, visual, id_visual_detail
+                torsi_strgh, status_dimensi, id_visual_detail
               ) VALUES (
                 '$id_inspeksi', '$material', '$operator_prod', '$d_kawat_act', '$p_produk_act', '$l_produk_act', 
                 '$p_mesh_act', '$l_mesh_act', '$diagonal',
-                '$torsi_strgh', '$visual', $id_visual_detail
+                '$torsi_strgh', '$status_dimensi', $id_visual_detail
               )";
 
     if (mysqli_query($conn, $query)) {
