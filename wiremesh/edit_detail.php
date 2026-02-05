@@ -71,10 +71,7 @@ if (!$data) {
             <label>Selisih Diagonal (mm)</label>
             <input type="number" name="diagonal" value="<?= $data['diagonal']; ?>" required>
         </div>
-        <div class="form-group">
-            <label>Shear Strength (MPa)</label>
-            <input type="number" step="0.1" name="shear_strght_mpa" value="<?= $data['shear_strght_mpa']; ?>" required>
-        </div>
+        
         <div class="form-group">
             <label>Torsi Strength</label>
             <select name="torsi_strgh" required>
@@ -83,10 +80,10 @@ if (!$data) {
             </select>
         </div> 
         <div class="form-group">
-            <label>Visual</label>
-            <select name="visual" required>
-                <option value="OK" <?= $data['visual']=="OK"?"selected":""; ?>>OK</option>
-                <option value="NG" <?= $data['visual']=="NG"?"selected":""; ?>>NG</option>
+            <label>Status Dimensi</label>
+            <select name="status_dimensi" required>
+                <option value="OK" <?= $data['status_dimensi']=="OK"?"selected":""; ?>>OK</option>
+                <option value="NG" <?= $data['status_dimensi']=="NG"?"selected":""; ?>>NG</option>
             </select>
         </div>
         <div class="form-group">

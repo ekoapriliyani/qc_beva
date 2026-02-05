@@ -18,9 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $p_mesh_act       = mysqli_real_escape_string($conn, $_POST['p_mesh_act']);
     $l_mesh_act       = mysqli_real_escape_string($conn, $_POST['l_mesh_act']);
     $diagonal         = mysqli_real_escape_string($conn, $_POST['diagonal']);
-    $shear_strght_mpa = mysqli_real_escape_string($conn, $_POST['shear_strght_mpa']);
     $torsi_strgh      = mysqli_real_escape_string($conn, $_POST['torsi_strgh']);
-    $visual           = mysqli_real_escape_string($conn, $_POST['visual']);
+    $status_dimensi   = mysqli_real_escape_string($conn, $_POST['status_dimensi']);
 
     // --- Update data utama inspeksi detail ---
     $query = "UPDATE t_inspeksi_wm_detail SET 
@@ -32,9 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 p_mesh_act='$p_mesh_act',
                 l_mesh_act='$l_mesh_act',
                 diagonal='$diagonal',
-                shear_strght_mpa='$shear_strght_mpa',
                 torsi_strgh='$torsi_strgh',
-                visual='$visual'
+                status_dimensi='$status_dimensi'
               WHERE id_detail='$id_detail'";
 
     if (mysqli_query($conn, $query)) {

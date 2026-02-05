@@ -179,12 +179,12 @@ if (isset($_POST["update_wm"])) {
     </h3>
 
         <div class="table-responsive">
-            <table class="specs-table">
+            <table class="specs-table" style="font-size: 12px; margin-top: 10px;">
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Visual Detail</th>
                         <th>Batch Number</th>
+                        <th>Visual Detail</th>
                         <th>Status</th>
                         <th>QTY/Roll</th>
                         <th>Created At</th>
@@ -199,8 +199,8 @@ if (isset($_POST["update_wm"])) {
                         while ($row_fg = mysqli_fetch_assoc($query_fg)) {
                             echo "<tr>";
                             echo "<td>".$no++."</td>";
-                            echo "<td>".$row_fg['visual_detail']."</td>";
                             echo "<td>".$row_fg['batch_number']."</td>";
+                            echo "<td>".$row_fg['visual_detail']."</td>";
                             echo "<td>".$row_fg['status']."</td>";
                             echo "<td>".$row_fg['qty']."</td>";
                             echo "<td>".$row_fg['created_at']."</td>";

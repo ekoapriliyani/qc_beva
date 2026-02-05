@@ -150,14 +150,14 @@ if (isset($_GET['id'])) {
                 <div class="form-group full-width">
                     <label>Visual Detail</label>
                     <select name="visual_detail" required>
-                    <option value="0">OK</option>
-                    <option value="1">Crack</option>
-                    <option value="2">Karat</option>
-                    <option value="3">Las (Lepas/Tidak ngelas)</option>
-                    <option value="4">CW-LW (Pendek/Bengkok/Putus)</option>
-                    <option value="5">Triming</option>
-                    <option value="6">Mesh</option>
-                    <option value="7">Handling</option>
+                    <option value="OK">OK</option>
+                    <option value="Crack">Crack</option>
+                    <option value="Karat">Karat</option>
+                    <option value="Las (Lepas/Tidak ngelas)">Las (Lepas/Tidak ngelas)</option>
+                    <option value="CW-LW (Pendek/Bengkok/Putus)">CW-LW (Pendek/Bengkok/Putus)</option>
+                    <option value="Triming">Triming</option>
+                    <option value="Mesh">Mesh</option>
+                    <option value="Handling">Handling</option>
                     </select>
                 </div>
                 <div class="form-group full-width">
