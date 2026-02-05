@@ -17,6 +17,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <title>QC Coating System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+    
     <style>
         body { overflow-x: hidden; background-color: #f8f9fc; }
         #sidebar-wrapper {
@@ -76,7 +80,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <i class="fas fa-users-cog me-2"></i> Subkon
             </a>
             <a href="read.php" class="list-group-item list-group-item-action <?= ($current_page == 'read.php') ? 'active' : ''; ?>">
-                <i class="fas fa-file-medical-alt me-2"></i> Laporan Coating
+                <i class="fas fa-file-medical-alt me-2"></i> Inspeksi Coating
+            </a>
+            <a href="fabrication.php" class="list-group-item list-group-item-action <?= ($current_page == 'fabrication.php') ? 'active' : ''; ?>">
+                <i class="fas fa-file-medical-alt me-2"></i> Inspeksi Fabrication
+            </a>
+            <a href="laporan.php" class="list-group-item list-group-item-action <?= ($current_page == 'laporan.php') ? 'active' : ''; ?>">
+                <i class="fas fa-file-medical-alt me-2"></i> Laporan
             </a>
         </div>
 

@@ -11,24 +11,16 @@ $query_header = "SELECT h.*, p.name as nama_proyek, s.nama as nama_subkon
                  JOIN t_subkon s ON h.id_subkon = s.id
                  WHERE h.id = '$id_coating'";
 $header = mysqli_fetch_assoc(mysqli_query($conn, $query_header));
+
+$name = $_SESSION['user_name'];
 ?>
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Detail Coating</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { background-color: #f8f9fa; }
         .card { border: none; border-radius: 12px; }
         .table thead { background-color: #4e73df; color: white; font-size: 0.9rem; }
         .form-label { font-size: 0.85rem; margin-bottom: 0.3rem; }
     </style>
-</head>
-<body>
 
 <div class="container-fluid py-4 px-5">
     <div class="card shadow-sm mb-4 border-start border-primary border-5">
@@ -112,6 +104,8 @@ $header = mysqli_fetch_assoc(mysqli_query($conn, $query_header));
                         <option value="NG">NG</option>
                     </select>
                 </div>
+
+                <input hidden type="text" name="inspector" value="<?= $name; ?>">
 
                 <div class="col-md-12 d-flex justify-content-between align-items-center mt-3">
                     <div class="form-check form-switch">
@@ -213,7 +207,5 @@ document.getElementById('visual_check').addEventListener('change', function() {
 });
 </script>
 
-</body>
-</html>
 
 <?php include "footer.php"; // Memanggil Penutup Tag dan JS ?>
