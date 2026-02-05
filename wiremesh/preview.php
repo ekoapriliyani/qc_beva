@@ -64,11 +64,15 @@ if (isset($_POST["update_wm"])) {
         <div>
             <span class="status-pill <?php echo ($data['status'] == 'OK') ? 'bg-ok' : 'bg-ng'; ?>">
                 STATUS: <?php echo $data['status']; ?>
-            </span>
+            </span>   
         </div>
     </div>
 
     <div class="info-section">
+        <div class="info-box">
+            <h4>Inspektor</h4>
+            <p><?= $data['inspector'] ; ?></p>
+        </div>
         <div class="info-box">
             <h4>Hari / Tanggal</h4>
             <p><?php echo date('d F Y', strtotime($data['hari_tgl'])); ?></p>

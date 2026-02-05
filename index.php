@@ -254,6 +254,17 @@ if (!isset($_SESSION["login"])) {
                 <span class="menu-text">Outgoing / Final</span>
             </a>
 
+            <div>
+                <div class="menu-item">
+                    <i class="fas fa-industry"></i>
+                    <span class="menu-text">QC Project</span>
+                </div>
+                <div class="submenu">
+                    <a href="coating/read.php" class="submenu-item">Coating</a>
+                    <a href="fabrication/index.php" class="submenu-item">Fabrication</a>
+                </div>
+            </div>
+
             <a href="#" class="menu-item">
                 <i class="fas fa-cog"></i>
                 <span class="menu-text">Settings</span>

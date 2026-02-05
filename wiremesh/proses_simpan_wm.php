@@ -31,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Query INSERT
     $query = "INSERT INTO t_inspeksi_wm (
+                inspector,
                 hari_tgl, 
                 shift,
                 pro_number, 
@@ -44,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 jml_ng, 
                 status_repair
               ) VALUES (
+                '$userName',
                 '$hari_tgl', 
                 '$shift', 
                 '$pro_number', 

@@ -49,6 +49,7 @@ $wiremesh = query("SELECT *
                 <tr>
                     <th>No</th>
                     <th>Tgl</th>
+                    <th>Inspector</th>
                     <th>Shift</th>
                     <th>PRO</th>
                     <th>Mesin</th>
@@ -67,6 +68,7 @@ $wiremesh = query("SELECT *
                     <tr>
                         <td><?= $no; ?></td>
                         <td><?= $row['hari_tgl']; ?></td>
+                        <td><?= $row['inspector']; ?></td>
                         <td><?= $row['shift']; ?></td>
                         <td><?= $row['pro_number']; ?></td>
                         <td><?= $row['mesin']; ?></td>

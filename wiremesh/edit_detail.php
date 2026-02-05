@@ -89,14 +89,14 @@ if (!$data) {
         <div class="form-group">
             <label>Visual Detail</label>
             <select name="visual_detail" required>
-                <option value="0" <?= $data['visual_detail']=="0"?"selected":""; ?>>OK</option>
-                <option value="1" <?= $data['visual_detail']=="1"?"selected":""; ?>>Crack</option>
-                <option value="2" <?= $data['visual_detail']=="2"?"selected":""; ?>>Karat</option>
-                <option value="3" <?= $data['visual_detail']=="3"?"selected":""; ?>>Las (Lepas/Tidak ngelas)</option>
-                <option value="4" <?= $data['visual_detail']=="4"?"selected":""; ?>>CW-LW (Pendek/Bengkok/Putus)</option>
-                <option value="5" <?= $data['visual_detail']=="5"?"selected":""; ?>>Triming</option>
-                <option value="6" <?= $data['visual_detail']=="6"?"selected":""; ?>>Mesh</option>
-                <option value="7" <?= $data['visual_detail']=="7"?"selected":""; ?>>Handling</option>
+                <option value="OK" <?= $data['visual_detail']=="OK"?"selected":""; ?>>OK</option>
+                <option value="Crack" <?= $data['visual_detail']=="Crack"?"selected":""; ?>>Crack</option>
+                <option value="Karat" <?= $data['visual_detail']=="Karat"?"selected":""; ?>>Karat</option>
+                <option value="Las (Lepas/Tidak ngelas)" <?= $data['visual_detail']=="Las (Lepas/Tidak ngelas)"?"selected":""; ?>>Las (Lepas/Tidak ngelas)</option>
+                <option value="CW-LW (Pendek/Bengkok/Putus)" <?= $data['visual_detail']=="CW-LW (Pendek/Bengkok/Putus)"?"selected":""; ?>>CW-LW (Pendek/Bengkok/Putus)</option>
+                <option value="Triming" <?= $data['visual_detail']=="Triming"?"selected":""; ?>>Triming</option>
+                <option value="Mesh" <?= $data['visual_detail']=="Mesh"?"selected":""; ?>>Mesh</option>
+                <option value="Handling" <?= $data['visual_detail']=="Handling"?"selected":""; ?>>Handling</option>
             </select>
         </div>
         <!-- <div class="form-group">

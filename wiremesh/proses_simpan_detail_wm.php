@@ -8,7 +8,7 @@ if (!isset($_SESSION["login"])) {
     exit;
 }
 
-include_once 'functions.php';
+// include_once 'functions.php';
 
 // Ambil data user dari session untuk info di dashboard
 $userName = $_SESSION["name"];
@@ -24,9 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $p_mesh_act       = mysqli_real_escape_string($conn, $_POST['p_mesh_act']);
     $l_mesh_act       = mysqli_real_escape_string($conn, $_POST['l_mesh_act']);
     $diagonal         = mysqli_real_escape_string($conn, $_POST['diagonal']);
-    
     $torsi_strgh      = mysqli_real_escape_string($conn, $_POST['torsi_strgh']);
-    $status_dimensi           = mysqli_real_escape_string($conn, $_POST['status_dimensi']);
+    $status_dimensi   = mysqli_real_escape_string($conn, $_POST['status_dimensi']);
 
     // --- Simpan Visual Detail jika ada ---
     $id_visual_detail = "NULL"; // default jika tidak ada
