@@ -10,7 +10,15 @@ include "header.php";
         </div>
         <div class="card-body p-4">
             <form action="proses_header.php" method="POST">
-                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Progress ke - </label>
+                        <select name="" id="">
+                            <option value=""></option>
+                        </select>
+                        <input type="text" name="progress" class="form-control" required>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-bold">Nomor PRO</label>

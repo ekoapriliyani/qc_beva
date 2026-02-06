@@ -94,8 +94,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <a href="fabrication.php" class="list-group-item list-group-item-action <?= ($current_page == 'fabrication.php') ? 'active' : ''; ?>">
                 <i class="fas fa-file-medical-alt me-2"></i> Inspeksi Fabrication
             </a>
-            <a href="laporan.php" class="list-group-item list-group-item-action <?= ($current_page == 'laporan.php') ? 'active' : ''; ?>">
-                <i class="fas fa-file-medical-alt me-2"></i> Laporan
+            <a href="laporan_coating.php" class="list-group-item list-group-item-action <?= ($current_page == 'laporan_coating.php') ? 'active' : ''; ?>">
+                <i class="fas fa-file-medical-alt me-2"></i> Laporan Coating
             </a>
         </div>
 

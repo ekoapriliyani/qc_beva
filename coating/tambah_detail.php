@@ -114,13 +114,20 @@ $name = $_SESSION['user_name'];
                 <input hidden type="text" name="inspector" value="<?= $name; ?>">
                 <!-- upload -->
                 <div class="col-md-10">
-                        <label class="form-label fw-bold text-uppercase text-muted">Lampiran Foto</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-light"><i class="fas fa-camera"></i></span>
-                            <input type="file" name="attachments[]" class="form-control" multiple accept="image/*,.pdf">
-                        </div>
-                        <div class="form-text text-danger small">* Pilih beberapa file sekaligus (Dokumen Bisa > 1)</div>
+                    <label class="form-label fw-bold text-uppercase text-muted">Lampiran Foto</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light"><i class="fas fa-camera"></i></span>
+                        <input type="file" name="attachments[]" class="form-control" multiple accept="image/*,.pdf">
+                    </div>
+                    <div class="form-text text-danger small">* Pilih beberapa file sekaligus (Dokumen Bisa > 1)</div>
+                    
+                    <button type="button" class="btn btn-outline-danger btn-sm mt-3 fw-bold" id="add-ng-detail">
+                        <i class="fas fa-exclamation-triangle me-1"></i> Tambah Detail Kerusakan (NG)
+                    </button>
                 </div>
+
+                <div class="col-md-12 mt-2" id="ng-container">
+                    </div>
 
                 <div class="col-md-12 d-flex justify-content-between align-items-center mt-3">
                     <div class="form-check form-switch">
@@ -128,7 +135,7 @@ $name = $_SESSION['user_name'];
                         <label class="form-check-label fw-bold" for="visual_check">Visual Check (ACC/NG)</label>
                     </div>
                     <button type="submit" class="btn btn-primary px-5 fw-bold shadow-sm">
-                        <i class="fas fa-plus-circle me-1"></i> Tambah Item
+                        <i class="fas fa-plus-circle me-1"></i> Simpan Inspeksi
                     </button>
                 </div>
             </form>
@@ -168,20 +175,31 @@ $name = $_SESSION['user_name'];
                         $foto_list = !empty($d['foto']) ? explode(',', $d['foto']) : [];
                         $modalId = "modalFoto" . $d['id']; // ID unik untuk setiap baris
 
+                        $modalNgId = "modalNg" . $d['id']; // ID unik untuk modal NG
+
+                        // Query untuk mengambil data NG dari tabel relasi
+                        $id_det = $d['id'];
+                        $q_ng = mysqli_query($conn, "SELECT * FROM t_coating_ng WHERE id_detail = '$id_det'");
+                        $has_ng = mysqli_num_rows($q_ng) > 0;
+
                         echo "<tr>
                                 <td class='ps-4'>{$no}</td>
                                 <td class='text-start fw-bold'>{$d['part_desc']}</td>
                                 <td>{$d['t_1']}</td><td>{$d['t_2']}</td><td>{$d['t_3']}</td><td>{$d['t_4']}</td><td>{$d['t_5']}</td>
                                 <td class='fw-bold bg-light'>{$d['avg']}</td>
-                                <td>{$visualIcon}</td>
-                                <td>{$d['qty']}</td>
-                                <td><span class='badge bg-{$resColor}'>{$d['result']}</span></td>
-                                <td>{$d['created_at']}</td>
+                                <td class='text-center'>{$visualIcon}</td>
+                                <td class='text-center'>{$d['qty']}</td>
+                                <td class='text-center'><span class='badge bg-{$resColor}'>{$d['result']}</span></td>
+                                <td class='text-center'>{$d['created_at']}</td>
                                 <td>{$d['inspector']}</td>
                                 <td>
                                     <div class='d-flex justify-content-center'>
-                                        <button type='button' class='btn btn-sm btn-link text-info me-1' data-bs-toggle='modal' data-bs-target='#{$modalId}'>
-                                            <i class='fas fa-info-circle'></i>
+                                        <button type='button' class='btn btn-sm btn-link text-warning me-1' data-bs-toggle='modal' data-bs-target='#{$modalNgId}' title='Detail NG'>
+                                            <i class='fas fa-exclamation-triangle'></i>
+                                        </button>
+
+                                        <button type='button' class='btn btn-sm btn-link text-info me-1' data-bs-toggle='modal' data-bs-target='#{$modalId}' title='Lihat Foto'>
+                                            <i class='fas fa-camera'></i>
                                         </button>
 
                                         <a href='hapus_detail.php?id={$d['id']}&id_coating={$id_coating}' class='btn btn-sm btn-link text-danger' onclick='return confirm(\"Hapus item?\")'>
@@ -193,34 +211,49 @@ $name = $_SESSION['user_name'];
                                         <div class='modal-dialog modal-dialog-centered modal-dialog-scrollable'>
                                             <div class='modal-content'>
                                                 <div class='modal-header'>
-                                                    <h5 class='modal-title'>Lampiran: {$d['part_desc']}</h5>
-                                                    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                    <h5 class='modal-title text-dark'>Lampiran Foto: {$d['part_desc']}</h5>
+                                                    <button type='button' class='btn-close' data-bs-dismiss='modal'></button>
                                                 </div>
                                                 <div class='modal-body text-center'>";
-                                                    
                                                     if (!empty($foto_list)) {
-                                                        echo "<div class='row g-2'>";
                                                         foreach ($foto_list as $img) {
-                                                            echo "
-                                                            <div class='col-12 mb-3'>
-                                                                <div class='card shadow-sm'>
-                                                                    <img src='uploads/{$img}' class='img-fluid rounded' alt='Foto Inspeksi'>
-                                                                    <div class='card-footer py-1 small bg-light text-muted'>{$img}</div>
-                                                                </div>
-                                                            </div>";
+                                                            echo "<div class='card mb-3 shadow-sm'>
+                                                                    <img src='uploads/{$img}' class='img-fluid rounded-top'>
+                                                                    <div class='card-footer py-1 small'>{$img}</div>
+                                                                </div>";
+                                                        }
+                                                    } else {
+                                                        echo "<p class='text-muted py-4'>Tidak ada foto.</p>";
+                                                    }
+                                                echo "</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class='modal fade' id='{$modalNgId}' tabindex='-1' aria-hidden='true'>
+                                        <div class='modal-dialog modal-dialog-centered'>
+                                            <div class='modal-content text-start'>
+                                                <div class='modal-header bg-warning'>
+                                                    <h5 class='modal-title fw-bold'>Detail Kerusakan (NG)</h5>
+                                                    <button type='button' class='btn-close' data-bs-dismiss='modal'></button>
+                                                </div>
+                                                <div class='modal-body'>";
+                                                    if ($has_ng) {
+                                                        echo "<div class='list-group'>";
+                                                        while($ng = mysqli_fetch_assoc($q_ng)) {
+                                                            echo "<div class='list-group-item'>
+                                                                    <h6 class='mb-1 fw-bold text-danger'>{$ng['ng_type']}</h6>
+                                                                    <p class='mb-0 small text-muted'>{$ng['ng_remark']}</p>
+                                                                </div>";
                                                         }
                                                         echo "</div>";
                                                     } else {
-                                                        echo "<div class='py-5 text-muted'>
-                                                                <i class='fas fa-image fa-3x mb-3 opacity-25'></i>
-                                                                <p>Tidak ada lampiran foto untuk item ini.</p>
+                                                        echo "<div class='text-center py-4'>
+                                                                <i class='fas fa-check-circle fa-3x text-success mb-2 opacity-50'></i>
+                                                                <p class='mb-0'>Item ini dinyatakan <strong>Visual ACC</strong>.</p>
                                                             </div>";
                                                     }
-
                                                 echo "</div>
-                                                <div class='modal-footer text-center'>
-                                                    <button type='button' class='btn btn-secondary btn-sm w-100' data-bs-dismiss='modal'>Tutup</button>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>

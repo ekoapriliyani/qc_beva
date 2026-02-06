@@ -21,7 +21,7 @@ $sql_analisa = "SELECT
 $res_analisa = mysqli_query($conn, $sql_analisa);
 ?>
 
-<div class="row g-4 mb-5">
+<!-- <div class="row g-4 mb-5">
     <div class="col-md-4">
         <div class="card border-0 shadow-sm bg-primary text-white p-3" style="border-radius: 15px;">
             <div class="d-flex justify-content-between align-items-center">
@@ -55,7 +55,7 @@ $res_analisa = mysqli_query($conn, $sql_analisa);
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="row">
     <div class="col-lg-8">
