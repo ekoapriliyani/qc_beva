@@ -28,6 +28,12 @@ $name = $_SESSION['user_name'];
             <div class="d-flex justify-content-between align-items-start">
                 <div class="row g-3">
                     <div class="col-auto border-end pe-4">
+                        <span class="text-muted small text-uppercase fw-bold d-block mb-1">Nomor PRO</span>
+                        <h5 class="mb-1"><?= $header['pro_number']; ?></h5>
+                        <p class="mb-0 text-muted small">QTY: <strong><?= $header['qty']; ?></strong></p>
+                    </div>
+                    
+                    <div class="col-auto border-end pe-4">
                         <span class="text-muted small text-uppercase fw-bold d-block mb-1">Project Information</span>
                         <h5 class="mb-1"><i class="fas fa-building me-2 text-primary"></i><?= $header['nama_proyek']; ?></h5>
                         <p class="mb-0 text-muted small"><i class="fas fa-id-badge me-2"></i>Subkon: <strong><?= $header['nama_subkon']; ?></strong></p>
@@ -58,7 +64,7 @@ $name = $_SESSION['user_name'];
             <h5 class="mb-0 fw-bold text-secondary">Thickness Coating</h5>
         </div>
         <div class="card-body">
-            <form action="proses_detail.php" method="POST" class="row g-3">
+            <form action="proses_detail.php" method="POST" enctype="multipart/form-data" class="row g-3">
                 <input type="hidden" name="id_coating" value="<?= $id_coating; ?>">
                 
                 <div class="col-md-3">
@@ -106,6 +112,15 @@ $name = $_SESSION['user_name'];
                 </div>
 
                 <input hidden type="text" name="inspector" value="<?= $name; ?>">
+                <!-- upload -->
+                <div class="col-md-10">
+                        <label class="form-label fw-bold text-uppercase text-muted">Lampiran Foto</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="fas fa-camera"></i></span>
+                            <input type="file" name="attachments[]" class="form-control" multiple accept="image/*,.pdf">
+                        </div>
+                        <div class="form-text text-danger small">* Pilih beberapa file sekaligus (Dokumen Bisa > 1)</div>
+                </div>
 
                 <div class="col-md-12 d-flex justify-content-between align-items-center mt-3">
                     <div class="form-check form-switch">
@@ -149,6 +164,9 @@ $name = $_SESSION['user_name'];
                         $visualIcon = ($d['visual_check'] == 'ACC') 
                                     ? "<i class='fas fa-check-circle text-success' title='ACC'></i>" 
                                     : "<i class='fas fa-times-circle text-danger' title='NG'></i>";
+                        // Pecah string foto menjadi array
+                        $foto_list = !empty($d['foto']) ? explode(',', $d['foto']) : [];
+                        $modalId = "modalFoto" . $d['id']; // ID unik untuk setiap baris
 
                         echo "<tr>
                                 <td class='ps-4'>{$no}</td>
@@ -161,9 +179,51 @@ $name = $_SESSION['user_name'];
                                 <td>{$d['created_at']}</td>
                                 <td>{$d['inspector']}</td>
                                 <td>
-                                    <a href='hapus_detail.php?id={$d['id']}&id_coating={$id_coating}' class='btn btn-sm btn-link text-danger' onclick='return confirm(\"Hapus item?\")'>
-                                        <i class='fas fa-trash'></i>
-                                    </a>
+                                    <div class='d-flex justify-content-center'>
+                                        <button type='button' class='btn btn-sm btn-link text-info me-1' data-bs-toggle='modal' data-bs-target='#{$modalId}'>
+                                            <i class='fas fa-info-circle'></i>
+                                        </button>
+
+                                        <a href='hapus_detail.php?id={$d['id']}&id_coating={$id_coating}' class='btn btn-sm btn-link text-danger' onclick='return confirm(\"Hapus item?\")'>
+                                            <i class='fas fa-trash'></i>
+                                        </a>
+                                    </div>
+
+                                    <div class='modal fade' id='{$modalId}' tabindex='-1' aria-hidden='true'>
+                                        <div class='modal-dialog modal-dialog-centered modal-dialog-scrollable'>
+                                            <div class='modal-content'>
+                                                <div class='modal-header'>
+                                                    <h5 class='modal-title'>Lampiran: {$d['part_desc']}</h5>
+                                                    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                </div>
+                                                <div class='modal-body text-center'>";
+                                                    
+                                                    if (!empty($foto_list)) {
+                                                        echo "<div class='row g-2'>";
+                                                        foreach ($foto_list as $img) {
+                                                            echo "
+                                                            <div class='col-12 mb-3'>
+                                                                <div class='card shadow-sm'>
+                                                                    <img src='uploads/{$img}' class='img-fluid rounded' alt='Foto Inspeksi'>
+                                                                    <div class='card-footer py-1 small bg-light text-muted'>{$img}</div>
+                                                                </div>
+                                                            </div>";
+                                                        }
+                                                        echo "</div>";
+                                                    } else {
+                                                        echo "<div class='py-5 text-muted'>
+                                                                <i class='fas fa-image fa-3x mb-3 opacity-25'></i>
+                                                                <p>Tidak ada lampiran foto untuk item ini.</p>
+                                                            </div>";
+                                                    }
+
+                                                echo "</div>
+                                                <div class='modal-footer text-center'>
+                                                    <button type='button' class='btn btn-secondary btn-sm w-100' data-bs-dismiss='modal'>Tutup</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>";
                         $no++;

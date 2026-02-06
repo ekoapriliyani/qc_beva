@@ -13,6 +13,17 @@ include "header.php";
                 
                 <div class="row">
                     <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Nomor PRO</label>
+                        <input type="text" name="pro_number" class="form-control" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">QTY.</label>
+                        <input type="number" name="qty" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
                         <label class="form-label fw-bold">Proyek</label>
                         <select name="id_project" class="form-control select2-search" required>
                             <option value=""></option> <?php 

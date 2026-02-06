@@ -59,6 +59,15 @@ $current_page = basename($_SERVER['PHP_SELF']);
         .navbar { padding: 0.8rem 1.5rem; }
         /* Logout di bagian paling bawah */
         .sidebar-footer { margin-top: auto; }
+
+        .modal-body img {
+            border-radius: 8px;
+            transition: transform 0.3s;
+            cursor: zoom-in;
+        }
+        .modal-body img:hover {
+            transform: scale(1.02);
+        }
     </style>
 </head>
 <body>
@@ -66,7 +75,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <div class="d-flex" id="wrapper">
     <div id="sidebar-wrapper">
         <div class="sidebar-heading border-bottom border-light border-opacity-25">
-            <i class="fas fa-paint-roller me-2"></i> QC COATING
+            <i class="fas fa-paint-roller me-2"></i> QC PROJECT
         </div>
         
         <div class="list-group list-group-flush mt-3">
