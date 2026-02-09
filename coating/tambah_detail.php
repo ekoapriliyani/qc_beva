@@ -66,7 +66,18 @@ $name = $_SESSION['user_name'];
         <div class="card-body">
             <form action="proses_detail.php" method="POST" enctype="multipart/form-data" class="row g-3">
                 <input type="hidden" name="id_coating" value="<?= $id_coating; ?>">
-                
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <select name="progress_ke" class="form-select" aria-label="Default select example">
+                        <option selected>-- Pengecekan ke : --</option>
+                        <option value="0">0 %</option>
+                        <option value="30">30 %</option>
+                        <option value="50">50 %</option>
+                        <option value="80">80 %</option>
+                        <option value="100">100 %</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="col-md-3">
                     <label class="form-label fw-bold text-uppercase text-muted">Part Description</label>
                     <input type="text" name="part_desc" class="form-control" placeholder="Description..." required autofocus>
@@ -148,6 +159,7 @@ $name = $_SESSION['user_name'];
                 <thead>
                     <tr>
                         <th class="ps-4">No</th>
+                        <th>Progress</th>
                         <th class="text-start">Part Description</th>
                         <th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th>
                         <th class="bg-light">AVG</th>
@@ -161,7 +173,7 @@ $name = $_SESSION['user_name'];
                 </thead>
                 <tbody>
                     <?php
-                    $details = mysqli_query($conn, "SELECT * FROM t_coating_detail WHERE id_coating = $id_coating ORDER BY id DESC");
+                    $details = mysqli_query($conn, "SELECT * FROM t_coating_detail WHERE id_coating = $id_coating ORDER BY progress_ke ASC");
                     $no = 1;
                     while($d = mysqli_fetch_assoc($details)) {
                         // 1. Perbaiki pengecekan warna (dari PASS ke ACC)
@@ -184,6 +196,7 @@ $name = $_SESSION['user_name'];
 
                         echo "<tr>
                                 <td class='ps-4'>{$no}</td>
+                                <td class='text-start fw-bold'>{$d['progress_ke']} %</td>
                                 <td class='text-start fw-bold'>{$d['part_desc']}</td>
                                 <td>{$d['t_1']}</td><td>{$d['t_2']}</td><td>{$d['t_3']}</td><td>{$d['t_4']}</td><td>{$d['t_5']}</td>
                                 <td class='fw-bold bg-light'>{$d['avg']}</td>

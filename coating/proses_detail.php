@@ -3,6 +3,7 @@ include "koneksi.php";
 
 // Ambil Data POST
 $id_coating   = $_POST['id_coating'];
+$progress_ke  = $_POST['progress_ke'];
 $part_desc    = mysqli_real_escape_string($conn, $_POST['part_desc']);
 $t_1          = !empty($_POST['t_1']) ? $_POST['t_1'] : 0;
 $t_2          = !empty($_POST['t_2']) ? $_POST['t_2'] : 0;
@@ -50,9 +51,9 @@ mysqli_begin_transaction($conn);
 try {
     // A. Simpan ke tabel Utama (t_coating_detail)
     $query_detail = "INSERT INTO t_coating_detail 
-                     (id_coating, part_desc, t_1, t_2, t_3, t_4, t_5, avg, visual_check, qty, result, inspector, foto) 
+                     (id_coating, progress_ke, part_desc, t_1, t_2, t_3, t_4, t_5, avg, visual_check, qty, result, inspector, foto) 
                      VALUES 
-                     ('$id_coating', '$part_desc', '$t_1', '$t_2', '$t_3', '$t_4', '$t_5', '$avg', '$visual_check', '$qty', '$final_result', '$inspector', '$foto_db')";
+                     ('$id_coating', '$progress_ke', '$part_desc', '$t_1', '$t_2', '$t_3', '$t_4', '$t_5', '$avg', '$visual_check', '$qty', '$final_result', '$inspector', '$foto_db')";
     
     if (!mysqli_query($conn, $query_detail)) {
         throw new Exception(mysqli_error($conn));
