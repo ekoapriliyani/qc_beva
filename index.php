@@ -231,7 +231,11 @@ if (!isset($_SESSION["login"])) {
         <div class="sidebar-menu">
             <a href="#" class="menu-item active">
                 <i class="fas fa-chart-line"></i>
-                <span class="menu-text">Overview</span>
+                <span class="menu-text">Home</span>
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-chart-line"></i>
+                <span class="menu-text">Master Produk</span>
             </a>
             <a href="#" class="menu-item">
                 <i class="fas fa-file-import"></i>

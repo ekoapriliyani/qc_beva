@@ -2,14 +2,14 @@
 
 include "koneksi.php";
 include "header.php"; // Memanggil Sidebar dan CSS
-$id_coating = mysqli_real_escape_string($conn, $_GET['id_coating']); 
+$id_fabrication = mysqli_real_escape_string($conn, $_GET['id_fabrication']); 
 
 // Query diperbarui dengan JOIN ke t_subkon
 $query_header = "SELECT h.*, p.name as nama_proyek, s.nama as nama_subkon 
-                 FROM t_coating_header h 
+                 FROM t_fabrication_header h 
                  JOIN t_project p ON h.id_project = p.id 
                  JOIN t_subkon s ON h.id_subkon = s.id
-                 WHERE h.id = '$id_coating'";
+                 WHERE h.id = '$id_fabrication'";
 $header = mysqli_fetch_assoc(mysqli_query($conn, $query_header));
 
 $name = $_SESSION['user_name'];
@@ -61,13 +61,13 @@ $name = $_SESSION['user_name'];
 
     <div class="card shadow-sm mb-4">
         <div class="card-header bg-white py-3">
-            <h5 class="mb-0 fw-bold text-secondary">Thickness Coating</h5>
+            <h5 class="mb-0 fw-bold text-secondary">-----</h5>
         </div>
         <div class="card-body">
             <form action="proses_detail.php" method="POST" enctype="multipart/form-data" class="row g-3">
-                <input type="hidden" name="id_coating" value="<?= $id_coating; ?>">
+                <input type="hidden" name="id_coating" value="<?= $id_fabrication; ?>">
                 <div class="row mt-3">
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-3">
                         <select name="progress_ke" class="form-select" aria-label="Default select example">
                         <option selected>-- Pengecekan ke : --</option>
                         <option value="0">0 %</option>
@@ -78,41 +78,50 @@ $name = $_SESSION['user_name'];
                         </select>
                     </div>
                 </div>
+
                 <div class="col-md-3">
                     <label class="form-label fw-bold text-uppercase text-muted">Part Description</label>
                     <input type="text" name="part_desc" class="form-control" placeholder="Description..." required autofocus>
                 </div>
-                <div class="col-md-1">
-                    <label class="form-label" for="">(min) µ</label>
-                    <input type="text" class="form-control">
+
+                <div class="col-md-1 mb-3">
+                    <label for="">Size</label>
+                    <select name="size" class="form-select" aria-label="Default select example">
+                        <option value="ACC">ACC</option>
+                        <option value="NG">NG</option>
+                    </select>
+                </div>
+                <div class="col-md-1 mb-3">
+                    <label for="">Dis Hole</label>
+                    <select name="dis_hole" class="form-select" aria-label="Default select example">
+                        <option value="-">-</option>
+                        <option value="ACC">ACC</option>
+                        <option value="NG">NG</option>
+                    </select>
+                </div>
+                <div class="col-md-1 mb-3">
+                    <label for="">Angle</label>
+                    <select name="angle" class="form-select" aria-label="Default select example">
+                        <option value="-">-</option>
+                        <option value="ACC">ACC</option>
+                        <option value="NG">NG</option>
+                    </select>
+                </div>
+                <div class="col-md-1 mb-3">
+                    <label for="">Straighness</label>
+                    <select name="starighness" class="form-select" aria-label="Default select example">
+                        <option value="ACC">ACC</option>
+                        <option value="NG">NG</option>
+                    </select>
+                </div>
+                <div class="col-md-1 mb-3">
+                    <label for="">Welding</label>
+                    <select name="welding" class="form-select" aria-label="Default select example">
+                        <option value="ACC">ACC</option>
+                        <option value="NG">NG</option>
+                    </select>
                 </div>
                 
-                <div class="col-md-1">
-                    <label class="form-label fw-bold">T1</label>
-                    <input type="number" step="0.01" name="t_1" class="form-control t-input" placeholder="0">
-                </div>
-                <div class="col-md-1">
-                    <label class="form-label fw-bold">T2</label>
-                    <input type="number" step="0.01" name="t_2" class="form-control t-input" placeholder="0">
-                </div>
-                <div class="col-md-1">
-                    <label class="form-label fw-bold">T3</label>
-                    <input type="number" step="0.01" name="t_3" class="form-control t-input" placeholder="0">
-                </div>
-                <div class="col-md-1">
-                    <label class="form-label fw-bold">T4</label>
-                    <input type="number" step="0.01" name="t_4" class="form-control t-input" placeholder="0">
-                </div>
-                <div class="col-md-1">
-                    <label class="form-label fw-bold">T5</label>
-                    <input type="number" step="0.01" name="t_5" class="form-control t-input" placeholder="0">
-                </div>
-
-                <div class="col-md-1">
-                    <label class="form-label fw-bold text-primary">Average</label>
-                    <input type="number" step="0.01" name="avg" id="avg_display" class="form-control bg-light fw-bold" readonly>
-                </div>
-
                 <div class="col-md-1">
                     <label class="form-label fw-bold">QTY</label>
                     <input type="number" name="qty" class="form-control" value="1">
@@ -156,7 +165,7 @@ $name = $_SESSION['user_name'];
             </form>
         </div>
     </div>
-
+<!-- 
     <div class="card shadow-sm text-nowrap">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0 text-center">
@@ -282,7 +291,7 @@ $name = $_SESSION['user_name'];
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> -->
 </div>
 
 
