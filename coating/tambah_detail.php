@@ -5,7 +5,7 @@ include "header.php"; // Memanggil Sidebar dan CSS
 $id_coating = mysqli_real_escape_string($conn, $_GET['id_coating']); 
 
 // Query diperbarui dengan JOIN ke t_subkon
-$query_header = "SELECT h.*, p.name as nama_proyek, s.nama as nama_subkon 
+$query_header = "SELECT h.*, p.name as nama_proyek, p.item_desc as item_desc, s.nama as nama_subkon 
                  FROM t_coating_header h 
                  JOIN t_project p ON h.id_project = p.id 
                  JOIN t_subkon s ON h.id_subkon = s.id
@@ -13,6 +13,14 @@ $query_header = "SELECT h.*, p.name as nama_proyek, s.nama as nama_subkon
 $header = mysqli_fetch_assoc(mysqli_query($conn, $query_header));
 
 $name = $_SESSION['user_name'];
+
+// Pecah item_desc dari database menjadi array untuk pilihan datalist
+$pilihan_item = [];
+if (!empty($header['item_desc'])) {
+    // Memecah berdasarkan baris baru dan membersihkan spasi kosong
+    $pilihan_item = array_filter(explode("\n", $header['item_desc']));
+}
+
 ?>
 
     <style>
@@ -78,15 +86,23 @@ $name = $_SESSION['user_name'];
                         </select>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <label class="form-label fw-bold text-uppercase text-muted">Part Description</label>
-                    <input type="text" name="part_desc" class="form-control" placeholder="Description..." required autofocus>
-                </div>
+                <div class="col-md-4">
+                <label class="form-label fw-bold text-uppercase text-muted">Part Description</label>
+                <input type="text" name="part_desc" id="part_desc" class="form-control" 
+                       placeholder="Pilih atau ketik manual..." 
+                       list="item_list" required autofocus autocomplete="off">
+                
+                <datalist id="item_list">
+                    <?php foreach ($pilihan_item as $item): ?>
+                        <option value="<?= htmlspecialchars(trim($item)); ?>">
+                    <?php endforeach; ?>
+                </datalist>
+                <small class="text-muted" style="font-size: 0.7rem;">*Klik 2x untuk melihat daftar item proyek</small>
+            </div>
                 <div class="col-md-1">
                     <label class="form-label" for="">(min) µ</label>
-                    <input type="text" class="form-control">
+                    <input type="number" name="min" class="form-control">
                 </div>
-                
                 <div class="col-md-1">
                     <label class="form-label fw-bold">T1</label>
                     <input type="number" step="0.01" name="t_1" class="form-control t-input" placeholder="0">
@@ -107,17 +123,14 @@ $name = $_SESSION['user_name'];
                     <label class="form-label fw-bold">T5</label>
                     <input type="number" step="0.01" name="t_5" class="form-control t-input" placeholder="0">
                 </div>
-
                 <div class="col-md-1">
                     <label class="form-label fw-bold text-primary">Average</label>
                     <input type="number" step="0.01" name="avg" id="avg_display" class="form-control bg-light fw-bold" readonly>
                 </div>
-
                 <div class="col-md-1">
                     <label class="form-label fw-bold">QTY</label>
                     <input type="number" name="qty" class="form-control" value="1">
                 </div>
-
                 <div class="col-md-2">
                     <label class="form-label fw-bold text-uppercase text-muted">Result</label>
                     <select name="result" id="result_dropdown" class="form-select fw-bold">
@@ -165,6 +178,7 @@ $name = $_SESSION['user_name'];
                         <th class="ps-4">No</th>
                         <th>Progress</th>
                         <th class="text-start">Part Description</th>
+                        <th>Min</th>
                         <th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th>
                         <th class="bg-light">AVG</th>
                         <th>Visual</th>
@@ -202,6 +216,7 @@ $name = $_SESSION['user_name'];
                                 <td class='ps-4'>{$no}</td>
                                 <td class='text-start fw-bold'>{$d['progress_ke']} %</td>
                                 <td class='text-start fw-bold'>{$d['part_desc']}</td>
+                                <td class='text-start fw-bold'>{$d['min']}</td>
                                 <td>{$d['t_1']}</td><td>{$d['t_2']}</td><td>{$d['t_3']}</td><td>{$d['t_4']}</td><td>{$d['t_5']}</td>
                                 <td class='fw-bold bg-light'>{$d['avg']}</td>
                                 <td class='text-center'>{$visualIcon}</td>
@@ -318,4 +333,4 @@ document.getElementById('visual_check').addEventListener('change', function() {
 </script>
 
 
-<?php include "footer.php"; // Memanggil Penutup Tag dan JS ?>
+<?php include "footer.php"; ?>
