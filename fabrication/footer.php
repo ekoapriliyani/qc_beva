@@ -25,9 +25,12 @@ $(document).ready(function() {
                 <div class="col-md-4">
                     <label class="small fw-bold">Jenis NG</label>
                     <select name="ng_type[]" class="form-select form-select-sm">
-                        <option value="Tipis">Tipis</option>
-                        <option value="Melepuh">Melepuh</option>
-                        <option value="Cracking">Cracking</option>
+                        <option value="Rough Surface/Kasar">Rough Surface/Kasar</option>
+                        <option value="White Rust/Karat Putih">White Rust/Karat Putih</option>
+                        <option value="Spikes/Jaruman">Spikes/Jaruman</option>
+                        <option value="Peel Off/Terkelupas">Peel Off/Terkelupas</option>
+                        <option value="Pin Holes/Bintik">Pin Holes/Bintik</option>
+                        <option value="Sagging/Tidak rata">Sagging/Tidak rata</option>
                         <option value="Lainnya">Lainnya</option>
                     </select>
                 </div>

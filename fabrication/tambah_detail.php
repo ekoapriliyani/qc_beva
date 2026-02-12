@@ -81,7 +81,16 @@ $name = $_SESSION['user_name'];
 
                 <div class="col-md-3">
                     <label class="form-label fw-bold text-uppercase text-muted">Part Description</label>
-                    <input type="text" name="part_desc" class="form-control" placeholder="Description..." required autofocus>
+                    <input type="text" name="part_desc" id="part_desc" class="form-control" 
+                        placeholder="Pilih atau ketik manual..." 
+                        list="item_list" required autofocus autocomplete="off">
+                    
+                    <datalist id="item_list">
+                        <?php foreach ($pilihan_item as $item): ?>
+                            <option value="<?= htmlspecialchars(trim($item)); ?>">
+                        <?php endforeach; ?>
+                    </datalist>
+                    <small class="text-muted" style="font-size: 0.7rem;">*Klik 2x untuk melihat daftar item proyek</small>
                 </div>
 
                 <div class="col-md-1 mb-3">
@@ -165,7 +174,7 @@ $name = $_SESSION['user_name'];
             </form>
         </div>
     </div>
-<!-- 
+
     <div class="card shadow-sm text-nowrap">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0 text-center">
@@ -186,7 +195,7 @@ $name = $_SESSION['user_name'];
                 </thead>
                 <tbody>
                     <?php
-                    $details = mysqli_query($conn, "SELECT * FROM t_coating_detail WHERE id_coating = $id_coating ORDER BY progress_ke ASC");
+                    $details = mysqli_query($conn, "SELECT * FROM t_fabrication_detail WHERE id_fabrication = $id_fabrication ORDER BY progress_ke ASC");
                     $no = 1;
                     while($d = mysqli_fetch_assoc($details)) {
                         // 1. Perbaiki pengecekan warna (dari PASS ke ACC)
@@ -291,7 +300,7 @@ $name = $_SESSION['user_name'];
                 </tbody>
             </table>
         </div>
-    </div> -->
+    </div>
 </div>
 
 

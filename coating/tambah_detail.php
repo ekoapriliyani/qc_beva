@@ -87,18 +87,18 @@ if (!empty($header['item_desc'])) {
                     </div>
                 </div>
                 <div class="col-md-4">
-                <label class="form-label fw-bold text-uppercase text-muted">Part Description</label>
-                <input type="text" name="part_desc" id="part_desc" class="form-control" 
-                       placeholder="Pilih atau ketik manual..." 
-                       list="item_list" required autofocus autocomplete="off">
-                
-                <datalist id="item_list">
-                    <?php foreach ($pilihan_item as $item): ?>
-                        <option value="<?= htmlspecialchars(trim($item)); ?>">
-                    <?php endforeach; ?>
-                </datalist>
-                <small class="text-muted" style="font-size: 0.7rem;">*Klik 2x untuk melihat daftar item proyek</small>
-            </div>
+                    <label class="form-label fw-bold text-uppercase text-muted">Part Description</label>
+                    <input type="text" name="part_desc" id="part_desc" class="form-control" 
+                        placeholder="Pilih atau ketik manual..." 
+                        list="item_list" required autofocus autocomplete="off">
+                    
+                    <datalist id="item_list">
+                        <?php foreach ($pilihan_item as $item): ?>
+                            <option value="<?= htmlspecialchars(trim($item)); ?>">
+                        <?php endforeach; ?>
+                    </datalist>
+                    <small class="text-muted" style="font-size: 0.7rem;">*Klik 2x untuk melihat daftar item proyek</small>
+                </div>
                 <div class="col-md-1">
                     <label class="form-label" for="">(min) µ</label>
                     <input type="number" name="min" class="form-control">

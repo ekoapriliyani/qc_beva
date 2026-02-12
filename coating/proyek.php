@@ -220,20 +220,27 @@ include "header.php";
 <script>
 // Logic Tambah/Hapus baris input (Global listener)
 document.addEventListener('click', function(e) {
+    // Jika tombol yang diklik punya class 'add-item-btn'
     if (e.target && e.target.classList.contains('add-item-btn')) {
-        const modalBody = e.target.closest('.modal-body');
-        const container = modalBody.querySelector('.item-container');
-        const div = document.createElement('div');
-        div.className = 'input-group mb-2';
-        div.innerHTML = `<input type="text" name="item_desc[]" class="form-control" placeholder="Isi deskripsi..." required><button type="button" class="btn btn-danger remove-item">Hapus</button>`;
-        container.appendChild(div);
+        const modalBody = e.target.closest('.modal-body'); // cari elemen modal terdekat
+        const container = modalBody.querySelector('.item-container'); // cari wadah item
+        const div = document.createElement('div'); // buat div baru
+        div.className = 'input-group mb-2'; // beri class untuk styling
+        div.innerHTML = `
+            <input type="text" name="item_desc[]" class="form-control" placeholder="Isi deskripsi..." required>
+            <button type="button" class="btn btn-danger remove-item">Hapus</button>
+        `;
+        container.appendChild(div); // masukkan div ke dalam container
     }
+
+    // Jika tombol yang diklik punya class 'remove-item'
     if (e.target && e.target.classList.contains('remove-item')) {
-        const container = e.target.closest('.item-container');
+        const container = e.target.closest('.item-container'); // cari wadah item
+        // Pastikan masih ada lebih dari 1 input sebelum dihapus
         if(container.querySelectorAll('.input-group').length > 1) {
-            e.target.parentElement.remove();
+            e.target.parentElement.remove(); // hapus input yang diklik
         } else {
-            alert('Minimal harus ada satu deskripsi.');
+            alert('Minimal harus ada satu deskripsi.'); // kalau tinggal 1, tampilkan pesan
         }
     }
 });
