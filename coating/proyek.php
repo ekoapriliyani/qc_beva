@@ -2,7 +2,7 @@
 include "koneksi.php";
 
 // --- KONFIGURASI PAGINATION & SEARCH ---
-$limit = 5; // Jumlah data per halaman
+$limit = 10; // Jumlah data per halaman
 $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
 $offset = ($halaman > 1) ? ($halaman * $limit) - $limit : 0;
 
