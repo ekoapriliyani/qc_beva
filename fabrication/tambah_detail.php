@@ -183,8 +183,6 @@ $name = $_SESSION['user_name'];
                         <th class="ps-4">No</th>
                         <th>Progress</th>
                         <th class="text-start">Part Description</th>
-                        <th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th>
-                        <th class="bg-light">AVG</th>
                         <th>Visual</th>
                         <th>QTY</th>
                         <th>Result</th>
@@ -213,15 +211,13 @@ $name = $_SESSION['user_name'];
 
                         // Query untuk mengambil data NG dari tabel relasi
                         $id_det = $d['id'];
-                        $q_ng = mysqli_query($conn, "SELECT * FROM t_coating_ng WHERE id_detail = '$id_det'");
+                        $q_ng = mysqli_query($conn, "SELECT * FROM t_fabrication_ng WHERE id_detail = '$id_det'");
                         $has_ng = mysqli_num_rows($q_ng) > 0;
 
                         echo "<tr>
                                 <td class='ps-4'>{$no}</td>
                                 <td class='text-start fw-bold'>{$d['progress_ke']} %</td>
                                 <td class='text-start fw-bold'>{$d['part_desc']}</td>
-                                <td>{$d['t_1']}</td><td>{$d['t_2']}</td><td>{$d['t_3']}</td><td>{$d['t_4']}</td><td>{$d['t_5']}</td>
-                                <td class='fw-bold bg-light'>{$d['avg']}</td>
                                 <td class='text-center'>{$visualIcon}</td>
                                 <td class='text-center'>{$d['qty']}</td>
                                 <td class='text-center'><span class='badge bg-{$resColor}'>{$d['result']}</span></td>
@@ -305,24 +301,7 @@ $name = $_SESSION['user_name'];
 
 
 <script>
-// Script Hitung Otomatis Average
-const tInputs = document.querySelectorAll('.t-input');
-const avgDisplay = document.getElementById('avg_display');
 
-tInputs.forEach(input => {
-    input.addEventListener('input', () => {
-        let total = 0;
-        let count = 0;
-        tInputs.forEach(ti => {
-            if(ti.value !== "") {
-                total += parseFloat(ti.value);
-                count++;
-            }
-        });
-        const average = count > 0 ? (total / count).toFixed(2) : 0;
-        avgDisplay.value = average;
-    });
-});
 
 
 document.getElementById('visual_check').addEventListener('change', function() {
@@ -336,4 +315,4 @@ document.getElementById('visual_check').addEventListener('change', function() {
 </script>
 
 
-<?php include "footer.php"; // Memanggil Penutup Tag dan JS ?>
+<?php include "footer.php";  ?>

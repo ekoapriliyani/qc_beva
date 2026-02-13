@@ -25,9 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $id_proyek = mysqli_real_escape_string($conn, $_POST['id_proyek']);
         $nama = mysqli_real_escape_string($conn, $_POST['name']);
         $no_pro = mysqli_real_escape_string($conn, $_POST['no_pro']);
+        $qty = mysqli_real_escape_string($conn, $_POST['qty']);
         $items = isset($_POST['item_desc']) ? implode("\n", $_POST['item_desc']) : "";
         $items = mysqli_real_escape_string($conn, $items);
-        mysqli_query($conn, "INSERT INTO t_project (id_proyek, name, no_pro, item_desc) VALUES ('$id_proyek', '$nama', '$no_pro', '$items')");
+        mysqli_query($conn, "INSERT INTO t_project (id_proyek, name, no_pro, qty, item_desc) VALUES ('$id_proyek', '$nama', '$no_pro', '$qty', '$items')");
         header("Location: proyek.php?msg=success"); exit;
     }
     if (isset($_POST['btn_update'])) {
@@ -35,9 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $id_proyek = mysqli_real_escape_string($conn, $_POST['id_proyek']);
         $nama = mysqli_real_escape_string($conn, $_POST['name']);
         $no_pro = mysqli_real_escape_string($conn, $_POST['no_pro']);
+        $qty = mysqli_real_escape_string($conn, $_POST['qty']);
         $items = isset($_POST['item_desc']) ? implode("\n", $_POST['item_desc']) : "";
         $items = mysqli_real_escape_string($conn, $items);
-        mysqli_query($conn, "UPDATE t_project SET name = '$nama', item_desc = '$items' WHERE id = '$id'");
+        mysqli_query($conn, "UPDATE t_project SET id_proyek = '$id_proyek', name = '$nama', no_pro = '$no_pro', qty = '$qty', item_desc = '$items' WHERE id = '$id'");
         header("Location: proyek.php?msg=updated"); exit;
     }
 }
@@ -79,6 +81,7 @@ include "header.php";
                         <th>ID PROYEK</th>
                         <th>NAMA PROYEK</th>
                         <th>NO PRO</th>
+                        <th>QTY</th>
                         <th>DESKRIPSI ITEM</th>
                         <th class="text-center">AKSI</th>
                     </tr>
@@ -96,6 +99,7 @@ include "header.php";
                         <td><?= htmlspecialchars($row['id_proyek']); ?></td>
                         <td><?= htmlspecialchars($row['name']); ?></td>
                         <td><?= htmlspecialchars($row['no_pro']); ?></td>
+                        <td><?= htmlspecialchars($row['qty']); ?></td>
                         <td>
                             <?php 
                                 $display_items = explode("\n", $row['item_desc']);
@@ -159,6 +163,10 @@ include "header.php";
                     <input type="text" name="no_pro" class="form-control" required>
                 </div>
                 <div class="mb-3">
+                    <label class="form-label fw-bold">QTY</label>
+                    <input type="text" name="qty" class="form-control" required>
+                </div>
+                <div class="mb-3">
                     <label class="form-label fw-bold d-flex justify-content-between">
                         Deskripsi Item
                         <button type="button" class="btn btn-sm btn-success add-item-btn">+ Item</button>
@@ -188,8 +196,20 @@ include "header.php";
             <div class="modal-body">
                 <input type="hidden" name="id" value="<?= $p['id']; ?>">
                 <div class="mb-3">
+                    <label class="form-label fw-bold">ID Proyek</label>
+                    <input type="text" name="id_proyek" class="form-control" value="<?= htmlspecialchars($p['id_proyek']); ?>" required>
+                </div>
+                <div class="mb-3">
                     <label class="form-label fw-bold">Nama Proyek</label>
                     <input type="text" name="name" class="form-control" value="<?= htmlspecialchars($p['name']); ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">No PRO</label>
+                    <input type="text" name="no_pro" class="form-control" value="<?= htmlspecialchars($p['no_pro']); ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">QTY</label>
+                    <input type="text" name="qty" class="form-control" value="<?= htmlspecialchars($p['qty']); ?>" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label fw-bold d-flex justify-content-between">
