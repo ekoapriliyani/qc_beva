@@ -82,16 +82,19 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <a href="index.php" class="list-group-item list-group-item-action <?= ($current_page == 'index.php') ? 'active' : ''; ?>">
                 <i class="fas fa-tachometer-alt me-2"></i> Dashboard
             </a>
+            <a href="incoming.php" class="list-group-item list-group-item-action <?= ($current_page == 'incoming.php') ? 'active' : ''; ?>">
+                <i class="fas fa-project-diagram me-2"></i> Incoming
+            </a>
             <a href="proyek.php" class="list-group-item list-group-item-action <?= ($current_page == 'proyek.php') ? 'active' : ''; ?>">
                 <i class="fas fa-project-diagram me-2"></i> Proyek
             </a>
             <a href="subkon.php" class="list-group-item list-group-item-action <?= ($current_page == 'subkon.php') ? 'active' : ''; ?>">
                 <i class="fas fa-users-cog me-2"></i> Subkon
             </a>
-            <a href="read.php" class="list-group-item list-group-item-action <?= ($current_page == 'read.php') ? 'active' : ''; ?>">
+            <a href="coating.php" class="list-group-item list-group-item-action <?= ($current_page == 'coating.php') ? 'active' : ''; ?>">
                 <i class="fas fa-file-medical-alt me-2"></i> Inspeksi Coating
             </a>
-            <a href="fabrication.php" class="list-group-item list-group-item-action <?= ($current_page == 'fabrication.php') ? 'active' : ''; ?>">
+            <a href="read.php" class="list-group-item list-group-item-action <?= ($current_page == 'read.php') ? 'active' : ''; ?>">
                 <i class="fas fa-file-medical-alt me-2"></i> Inspeksi Fabrication
             </a>
             <a href="laporan_coating.php" class="list-group-item list-group-item-action <?= ($current_page == 'laporan_coating.php') ? 'active' : ''; ?>">

@@ -5,7 +5,7 @@ include "header.php"; // Memanggil Sidebar dan CSS
 $id_coating = mysqli_real_escape_string($conn, $_GET['id_coating']); 
 
 // Query diperbarui dengan JOIN ke t_subkon
-$query_header = "SELECT h.*, p.name as nama_proyek, p.item_desc as item_desc, s.nama as nama_subkon 
+$query_header = "SELECT h.*, p.name as nama_proyek, p.item_desc as item_desc, s.nama as nama_subkon, p.no_pro as no_pro, p.qty as qty
                  FROM t_coating_header h 
                  JOIN t_project p ON h.id_project = p.id 
                  JOIN t_subkon s ON h.id_subkon = s.id
@@ -37,7 +37,7 @@ if (!empty($header['item_desc'])) {
                 <div class="row g-3">
                     <div class="col-auto border-end pe-4">
                         <span class="text-muted small text-uppercase fw-bold d-block mb-1">Nomor PRO</span>
-                        <h5 class="mb-1"><?= $header['pro_number']; ?></h5>
+                        <h5 class="mb-1"><?= $header['no_pro']; ?></h5>
                         <p class="mb-0 text-muted small">QTY: <strong><?= $header['qty']; ?></strong></p>
                     </div>
                     

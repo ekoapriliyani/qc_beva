@@ -5,7 +5,7 @@ include "header.php"; // Memanggil Sidebar dan CSS
 $id_fabrication = mysqli_real_escape_string($conn, $_GET['id_fabrication']); 
 
 // Query diperbarui dengan JOIN ke t_subkon
-$query_header = "SELECT h.*, p.name as nama_proyek, s.nama as nama_subkon 
+$query_header = "SELECT h.*, p.name as nama_proyek, p.item_desc as item_desc, s.nama as nama_subkon, p.no_pro as no_pro, p.qty as qty
                  FROM t_fabrication_header h 
                  JOIN t_project p ON h.id_project = p.id 
                  JOIN t_subkon s ON h.id_subkon = s.id
@@ -13,6 +13,14 @@ $query_header = "SELECT h.*, p.name as nama_proyek, s.nama as nama_subkon
 $header = mysqli_fetch_assoc(mysqli_query($conn, $query_header));
 
 $name = $_SESSION['user_name'];
+
+// Pecah item_desc dari database menjadi array untuk pilihan datalist
+$pilihan_item = [];
+if (!empty($header['item_desc'])) {
+    // Memecah berdasarkan baris baru dan membersihkan spasi kosong
+    $pilihan_item = array_filter(explode("\n", $header['item_desc']));
+}
+
 ?>
 
     <style>
@@ -29,7 +37,7 @@ $name = $_SESSION['user_name'];
                 <div class="row g-3">
                     <div class="col-auto border-end pe-4">
                         <span class="text-muted small text-uppercase fw-bold d-block mb-1">Nomor PRO</span>
-                        <h5 class="mb-1"><?= $header['pro_number']; ?></h5>
+                        <h5 class="mb-1"><?= $header['no_pro']; ?></h5>
                         <p class="mb-0 text-muted small">QTY: <strong><?= $header['qty']; ?></strong></p>
                     </div>
                     
@@ -79,7 +87,7 @@ $name = $_SESSION['user_name'];
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label class="form-label fw-bold text-uppercase text-muted">Part Description</label>
                     <input type="text" name="part_desc" id="part_desc" class="form-control" 
                         placeholder="Pilih atau ketik manual..." 

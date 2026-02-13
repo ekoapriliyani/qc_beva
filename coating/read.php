@@ -29,8 +29,8 @@ $total_halaman = ceil($total_data / $batas);
 
 // 4. QUERY UTAMA DENGAN LIMIT & OFFSET
 $sql = "SELECT 
-            h.id AS header_id, h.pro_number, h.qty, h.tgl, h.report_no, h.drawing_no,
-            p.name AS nama_proyek, s.nama AS nama_subkon,
+            h.id AS header_id, h.tgl, h.report_no, h.drawing_no,
+            p.name AS nama_proyek, s.nama AS nama_subkon, p.no_pro AS no_pro, p.qty AS qty,
             COUNT(d.id) as total_item
         FROM t_coating_header h
         JOIN t_project p ON h.id_project = p.id
@@ -90,7 +90,7 @@ $result = mysqli_query($conn, $sql);
                         <td class="ps-4 text-muted"><?= $no++; ?></td>
                         <td>
                             <div class="fw-bold"><?= date('d M Y', strtotime($row['tgl'])); ?></div>
-                            <small class="text-muted">PRO: <?= $row['pro_number']; ?></small>
+                            <small class="text-muted">PRO: <?= $row['no_pro']; ?></small>
                         </td>
                         <td><span class="badge bg-light text-dark border"><?= $row['qty']; ?></span></td>
                         <td>
