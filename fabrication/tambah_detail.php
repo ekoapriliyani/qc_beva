@@ -73,7 +73,7 @@ if (!empty($header['item_desc'])) {
         </div>
         <div class="card-body">
             <form action="proses_detail.php" method="POST" enctype="multipart/form-data" class="row g-3">
-                <input type="hidden" name="id_coating" value="<?= $id_fabrication; ?>">
+                <input type="hidden" name="id_fabrication" value="<?= $id_fabrication; ?>">
                 <div class="row mt-3">
                     <div class="col-md-6 mb-3">
                         <select name="progress_ke" class="form-select" aria-label="Default select example">
@@ -126,7 +126,7 @@ if (!empty($header['item_desc'])) {
                 </div>
                 <div class="col-md-1 mb-3">
                     <label for="">Straighness</label>
-                    <select name="starighness" class="form-select" aria-label="Default select example">
+                    <select name="straighness" class="form-select" aria-label="Default select example">
                         <option value="ACC">ACC</option>
                         <option value="NG">NG</option>
                     </select>
@@ -191,9 +191,13 @@ if (!empty($header['item_desc'])) {
                         <th class="ps-4">No</th>
                         <th>Progress</th>
                         <th class="text-start">Part Description</th>
-                        <th>Visual</th>
-                        <th>QTY</th>
+                        <th>Size</th>
+                        <th>Dis Hole</th>
+                        <th>Angle</th>
+                        <th>Straighness</th>
+                        <th>Welding</th>
                         <th>Result</th>
+                        <th>QTY</th>
                         <th>Tgl/Jam</th>
                         <th>Inspektor</th>
                         <th>Aksi</th>
@@ -207,10 +211,6 @@ if (!empty($header['item_desc'])) {
                         // 1. Perbaiki pengecekan warna (dari PASS ke ACC)
                         $resColor = ($d['result'] == 'ACC') ? 'success' : 'danger';
 
-                        // 2. Perbaiki icon visual check agar dinamis (Hijau jika ACC, Merah jika NG)
-                        $visualIcon = ($d['visual_check'] == 'ACC') 
-                                    ? "<i class='fas fa-check-circle text-success' title='ACC'></i>" 
-                                    : "<i class='fas fa-times-circle text-danger' title='NG'></i>";
                         // Pecah string foto menjadi array
                         $foto_list = !empty($d['foto']) ? explode(',', $d['foto']) : [];
                         $modalId = "modalFoto" . $d['id']; // ID unik untuk setiap baris
@@ -226,7 +226,10 @@ if (!empty($header['item_desc'])) {
                                 <td class='ps-4'>{$no}</td>
                                 <td class='text-start fw-bold'>{$d['progress_ke']} %</td>
                                 <td class='text-start fw-bold'>{$d['part_desc']}</td>
-                                <td class='text-center'>{$visualIcon}</td>
+                                <td class='text-start fw-bold'>{$d['size']}</td>
+                                <td class='text-start fw-bold'>{$d['dis_hole']}</td>
+                                <td class='text-start fw-bold'>{$d['angle']}</td>
+                                <td class='text-start fw-bold'>{$d['straighness']}</td>
                                 <td class='text-center'>{$d['qty']}</td>
                                 <td class='text-center'><span class='badge bg-{$resColor}'>{$d['result']}</span></td>
                                 <td class='text-center'>{$d['created_at']}</td>
@@ -241,7 +244,7 @@ if (!empty($header['item_desc'])) {
                                             <i class='fas fa-camera'></i>
                                         </button>
 
-                                        <a href='hapus_detail.php?id={$d['id']}&id_coating={$id_coating}' class='btn btn-sm btn-link text-danger' onclick='return confirm(\"Hapus item?\")'>
+                                        <a href='hapus_detail.php?id={$d['id']}&id_fabrication={$id_fabrication}' class='btn btn-sm btn-link text-danger' onclick='return confirm(\"Hapus item?\")'>
                                             <i class='fas fa-trash'></i>
                                         </a>
                                     </div>

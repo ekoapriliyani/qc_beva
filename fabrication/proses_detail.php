@@ -2,16 +2,18 @@
 include "koneksi.php";
 
 // Ambil Data POST
-$id_coating   = $_POST['id_coating'];
+$id_fabrication   = $_POST['id_fabrication'];
+
+var_dump($id_fabrication);
 $progress_ke  = $_POST['progress_ke'];
 $part_desc    = mysqli_real_escape_string($conn, $_POST['part_desc']);
-$t_1          = !empty($_POST['t_1']) ? $_POST['t_1'] : 0;
-$t_2          = !empty($_POST['t_2']) ? $_POST['t_2'] : 0;
-$t_3          = !empty($_POST['t_3']) ? $_POST['t_3'] : 0;
-$t_4          = !empty($_POST['t_4']) ? $_POST['t_4'] : 0;
-$t_5          = !empty($_POST['t_5']) ? $_POST['t_5'] : 0;
-$avg          = $_POST['avg'];
-$qty          = !empty($_POST['qty']) ? $_POST['qty'] : 1;
+$size    = mysqli_real_escape_string($conn, $_POST['size']);
+$dis_hole    = mysqli_real_escape_string($conn, $_POST['dis_hole']);
+$angle    = mysqli_real_escape_string($conn, $_POST['angle']);
+$straighness    = mysqli_real_escape_string($conn, $_POST['straighness']);
+$welding    = mysqli_real_escape_string($conn, $_POST['welding']);
+$qty    = mysqli_real_escape_string($conn, $_POST['qty']);
+
 $result_input = $_POST['result']; 
 $inspector    = mysqli_real_escape_string($conn, $_POST['inspector']);
 
@@ -49,11 +51,11 @@ $foto_db = implode(",", $nama_file_random);
 mysqli_begin_transaction($conn);
 
 try {
-    // A. Simpan ke tabel Utama (t_coating_detail)
-    $query_detail = "INSERT INTO t_coating_detail 
-                     (id_coating, progress_ke, part_desc, t_1, t_2, t_3, t_4, t_5, avg, visual_check, qty, result, inspector, foto) 
+    // A. Simpan ke tabel Utama (t_fabrication_detail)
+    $query_detail = "INSERT INTO t_fabrication_detail 
+                     (id_fabrication, progress_ke, part_desc, size, dis_hole, angle, straighness, welding, qty, result, inspector, foto) 
                      VALUES 
-                     ('$id_coating', '$progress_ke', '$part_desc', '$t_1', '$t_2', '$t_3', '$t_4', '$t_5', '$avg', '$visual_check', '$qty', '$final_result', '$inspector', '$foto_db')";
+                     ('$id_fabrication', '$progress_ke', '$part_desc', '$size', '$dis_hole', '$angle', '$straighness', '$welding', '$qty', '$final_result', '$inspector', '$foto_db')";
     
     if (!mysqli_query($conn, $query_detail)) {
         throw new Exception(mysqli_error($conn));
@@ -62,7 +64,7 @@ try {
     // Ambil ID Detail yang baru saja masuk
     $id_detail_baru = mysqli_insert_id($conn);
 
-    // B. Simpan ke tabel NG (t_coating_ng) jika ada input NG
+    // B. Simpan ke tabel NG (t_fabrication_ng) jika ada input NG
     if (isset($_POST['ng_type']) && is_array($_POST['ng_type'])) {
         foreach ($_POST['ng_type'] as $key => $type) {
             if (!empty($type)) {
@@ -81,7 +83,7 @@ try {
 
     // Jika semua OK, Commit!
     mysqli_commit($conn);
-    header("Location: tambah_detail.php?id_coating=$id_coating&status=success");
+    header("Location: tambah_detail.php?id_fabrication=$id_fabrication&status=success");
 
 } catch (Exception $e) {
     // Jika ada yang gagal, Batalkan semua (Rollback)
