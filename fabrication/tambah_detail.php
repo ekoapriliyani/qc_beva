@@ -196,8 +196,8 @@ if (!empty($header['item_desc'])) {
                         <th>Angle</th>
                         <th>Straighness</th>
                         <th>Welding</th>
-                        <th>Result</th>
                         <th>QTY</th>
+                        <th>Result</th>
                         <th>Tgl/Jam</th>
                         <th>Inspektor</th>
                         <th>Aksi</th>
@@ -224,12 +224,13 @@ if (!empty($header['item_desc'])) {
 
                         echo "<tr>
                                 <td class='ps-4'>{$no}</td>
-                                <td class='text-start fw-bold'>{$d['progress_ke']} %</td>
-                                <td class='text-start fw-bold'>{$d['part_desc']}</td>
-                                <td class='text-start fw-bold'>{$d['size']}</td>
-                                <td class='text-start fw-bold'>{$d['dis_hole']}</td>
-                                <td class='text-start fw-bold'>{$d['angle']}</td>
-                                <td class='text-start fw-bold'>{$d['straighness']}</td>
+                                <td class='text-start'>{$d['progress_ke']} %</td>
+                                <td class='text-start'>{$d['part_desc']}</td>
+                                <td class='text-start'>{$d['size']}</td>
+                                <td class='text-start'>{$d['dis_hole']}</td>
+                                <td class='text-start'>{$d['angle']}</td>
+                                <td class='text-start'>{$d['straighness']}</td>
+                                <td class='text-start'>{$d['welding']}</td>
                                 <td class='text-center'>{$d['qty']}</td>
                                 <td class='text-center'><span class='badge bg-{$resColor}'>{$d['result']}</span></td>
                                 <td class='text-center'>{$d['created_at']}</td>
