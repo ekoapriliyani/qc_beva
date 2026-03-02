@@ -21,7 +21,7 @@ if (isset($_POST["login"])) {
         if ($password === $row["password"]) {
             $_SESSION["login"] = true;
             $_SESSION["id_user"] = $row["id_user"];
-            $_SESSION["name"] = $row["name"];
+            $_SESSION["user_name"] = $row["name"];
             $_SESSION["role"] = $row["role"];
 
             header("Location: index.php");

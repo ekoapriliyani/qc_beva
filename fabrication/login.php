@@ -23,6 +23,7 @@ if (isset($_POST['login'])) {
             $_SESSION['login'] = true;
             $_SESSION['user_email'] = $row['email'];
             $_SESSION['user_name'] = $row['name'];
+            $_SESSION["role"] = $row["role"];
             header("Location: index.php");
             exit;
         }

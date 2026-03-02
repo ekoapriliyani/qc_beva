@@ -23,7 +23,7 @@ if (isset($_POST["login"])) {
             // Set session
             $_SESSION["login"] = true;
             $_SESSION["id_user"] = $row["id_user"];
-            $_SESSION["name"] = $row["name"];
+            $_SESSION["user_name"] = $row["name"];
             $_SESSION["user_email"] = $row["email"];
             $_SESSION["role"] = $row["role"]; // Kita simpan role (inspector/supervisor/manager)
 

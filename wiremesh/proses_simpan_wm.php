@@ -11,7 +11,7 @@ if (!isset($_SESSION["login"])) {
 include_once 'functions.php';
 
 // Ambil data user dari session untuk info di dashboard
-$userName = $_SESSION["name"];
+$userName = $_SESSION["user_name"];
 $userRole = $_SESSION["role"];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

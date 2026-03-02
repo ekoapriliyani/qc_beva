@@ -10,7 +10,7 @@ if (!isset($_SESSION["login"])) {
 
 
 // Ambil data user dari session untuk info di dashboard
-$userName = $_SESSION["name"];
+$userName = $_SESSION["user_name"];
 $userRole = $_SESSION["role"];
 
 if (isset($_POST["save_pro"]) > 0) {
