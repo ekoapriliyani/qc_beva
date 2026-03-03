@@ -75,16 +75,29 @@ if (!empty($header['item_desc'])) {
             <form action="proses_detail.php" method="POST" enctype="multipart/form-data" class="row g-3">
                 <input type="hidden" name="id_coating" value="<?= $id_coating; ?>">
                 <div class="row mt-3">
-                    <div class="col-md-6">
-                        <select name="progress_ke" class="form-select" aria-label="Default select example">
-                        <option selected>-- Pengecekan ke : --</option>
-                        <option value="0">0 %</option>
-                        <option value="30">30 %</option>
-                        <option value="50">50 %</option>
-                        <option value="80">80 %</option>
-                        <option value="100">100 %</option>
-                        </select>
+                <div class="col-md-12">
+                    <label class="form-label">Pengecekan ke :</label><br>
+                    <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="progress_ke" value="0" id="progress0">
+                    <label class="form-check-label" for="progress0">0 %</label>
                     </div>
+                    <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="progress_ke" value="30" id="progress30">
+                    <label class="form-check-label" for="progress30">30 %</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="progress_ke" value="50" id="progress50">
+                    <label class="form-check-label" for="progress50">50 %</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="progress_ke" value="80" id="progress80">
+                    <label class="form-check-label" for="progress80">80 %</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="progress_ke" value="100" id="progress100">
+                    <label class="form-check-label" for="progress100">100 %</label>
+                    </div>
+                </div>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label fw-bold text-uppercase text-muted">Part Description</label>
@@ -113,15 +126,15 @@ if (!empty($header['item_desc'])) {
                 </div>
                 <div class="col-md-1">
                     <label class="form-label fw-bold">T3</label>
-                    <input type="number" step="0.01" name="t_3" class="form-control t-input" placeholder="0">
+                    <input type="number" step="0.01" name="t_3" class="form-control t-input" placeholder="0" required>
                 </div>
                 <div class="col-md-1">
                     <label class="form-label fw-bold">T4</label>
-                    <input type="number" step="0.01" name="t_4" class="form-control t-input" placeholder="0">
+                    <input type="number" step="0.01" name="t_4" class="form-control t-input" placeholder="0" required>
                 </div>
                 <div class="col-md-1">
                     <label class="form-label fw-bold">T5</label>
-                    <input type="number" step="0.01" name="t_5" class="form-control t-input" placeholder="0">
+                    <input type="number" step="0.01" name="t_5" class="form-control t-input" placeholder="0" required>
                 </div>
                 <div class="col-md-1">
                     <label class="form-label fw-bold text-primary">Average</label>

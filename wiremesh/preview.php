@@ -207,10 +207,16 @@ if (isset($_POST["update_wm"])) {
                                     $badgeClass = 'bg-secondary'; // fallback jika status tidak dikenali
                                 }
 
+                                // Cek apakah ada foto
+                                $fotoData = $row_fg['foto']; // string: "foto1.jpg,foto2.jpg"
+                                $hasFoto = !empty($fotoData) ? 'text-primary' : 'text-muted disabled';
+                                $onClick = !empty($fotoData) ? "onclick='showImages(\"$fotoData\")'" : "onclick='alert(\"Tidak ada foto\")'";
+
                                 echo "<td><span class='badge $badgeClass'>".$row_fg['status']."</span></td>";
                                 echo "<td>".$row_fg['qty']."</td>";
                                 echo "<td>".$row_fg['created_at']."</td>";
                                 echo "<td class='text-center'>
+                                        <a href='javascript:void(0)' class='$hasFoto mx-1' $onClick title='Lihat Foto'><i class='fas fa-image'></i></a>
                                         <a href='edit_fg.php?id_fg=".$row_fg['id_fg']."&id_main=$id' class='text-warning mx-1'><i class='fas fa-edit'></i></a>
                                         <a href='hapus_fg.php?id_fg=".$row_fg['id_fg']."&id_main=$id' class='text-danger mx-1' onclick='return confirm(\"Hapus?\")'><i class='fas fa-trash'></i></a>
                                     </td>";
@@ -259,6 +265,21 @@ if (isset($_POST["update_wm"])) {
     </div>
 </div>
 
+// modal foto
+<div class="modal fade" id="modalFoto" tabindex="-1" aria-labelledby="modalFotoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalFotoLabel"><i class="fas fa-images me-2"></i>Foto Temuan QC</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="containerFoto" class="row g-3 justify-content-center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -275,6 +296,42 @@ document.addEventListener("DOMContentLoaded", function() {
         form.querySelector('input[name="jml_ng"]').focus();
     });
 });
+</script>
+
+<script>
+function showImages(fotoString) {
+    const container = document.getElementById('containerFoto');
+    container.innerHTML = ''; // Bersihkan isi modal sebelumnya
+
+    if (fotoString.trim() === "") return;
+
+    // Pecah string menjadi array
+    const fotos = fotoString.split(',');
+    
+    fotos.forEach(foto => {
+        const col = document.createElement('div');
+        col.className = 'col-md-6 col-lg-4 text-center';
+        
+        // Path disesuaikan dengan folder upload Anda
+        const path = "uploads/fg/" + foto.trim();
+        
+        col.innerHTML = `
+            <div class="card h-100 shadow-sm">
+                <a href="${path}" target="_blank">
+                    <img src="${path}" class="img-fluid rounded" style="max-height: 250px; object-fit: contain;" alt="Foto QC">
+                </a>
+                <div class="card-footer p-1">
+                    <small class="text-muted">${foto.substring(0, 20)}...</small>
+                </div>
+            </div>
+        `;
+        container.appendChild(col);
+    });
+
+    // Tampilkan modal
+    const myModal = new bootstrap.Modal(document.getElementById('modalFoto'));
+    myModal.show();
+}
 </script>
 </body>
 </html>

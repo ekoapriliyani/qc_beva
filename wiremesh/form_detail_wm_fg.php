@@ -79,7 +79,7 @@ if (isset($_GET['id'])) {
                         </div>
                     </div>
 
-                    <form action="proses_simpan_detail_wm_fg.php" method="POST">
+                    <form action="proses_simpan_detail_wm_fg.php" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="id_inspeksi" value="<?= $id_inspeksi; ?>">
                         
                         <div class="row g-3 mb-4 p-3 bg-light rounded border">
@@ -130,6 +130,18 @@ if (isset($_GET['id'])) {
                                     <div class="col-md-7">
                                         <label class="form-label small text-muted">KETERANGAN / CATATAN</label>
                                         <input type="text" name="visual_ket[]" class="form-control" placeholder="Tulis detail temuan di sini...">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <div class="card border-dashed bg-light">
+                                <div class="card-body">
+                                    <label class="form-label fw-bold"><i class="fas fa-camera me-2"></i>Upload Foto Temuan (Bisa lebih dari 1)</label>
+                                    <input type="file" name="foto_fg[]" class="form-control" accept="image/*" multiple>
+                                    <div class="form-text text-muted">
+                                        <i class="fas fa-info-circle me-1"></i> Anda dapat memilih beberapa foto sekaligus. Format: JPG, PNG, JPEG.
                                     </div>
                                 </div>
                             </div>
