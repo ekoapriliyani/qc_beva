@@ -104,7 +104,7 @@ if (!empty($header['item_desc'])) {
                 <div class="col-md-1 mb-3">
                     <label for="">Size</label>
                     <select name="size" class="form-select" aria-label="Default select example">
-                        <option value="ACC">ACC</option>
+                        <option value="OK">OK</option>
                         <option value="NG">NG</option>
                     </select>
                 </div>
@@ -112,7 +112,7 @@ if (!empty($header['item_desc'])) {
                     <label for="">Dis Hole</label>
                     <select name="dis_hole" class="form-select" aria-label="Default select example">
                         <option value="-">-</option>
-                        <option value="ACC">ACC</option>
+                        <option value="OK">OK</option>
                         <option value="NG">NG</option>
                     </select>
                 </div>
@@ -120,21 +120,21 @@ if (!empty($header['item_desc'])) {
                     <label for="">Angle</label>
                     <select name="angle" class="form-select" aria-label="Default select example">
                         <option value="-">-</option>
-                        <option value="ACC">ACC</option>
+                        <option value="OK">OK</option>
                         <option value="NG">NG</option>
                     </select>
                 </div>
                 <div class="col-md-1 mb-3">
                     <label for="">Straighness</label>
                     <select name="straighness" class="form-select" aria-label="Default select example">
-                        <option value="ACC">ACC</option>
+                        <option value="OK">OK</option>
                         <option value="NG">NG</option>
                     </select>
                 </div>
                 <div class="col-md-1 mb-3">
                     <label for="">Welding</label>
                     <select name="welding" class="form-select" aria-label="Default select example">
-                        <option value="ACC">ACC</option>
+                        <option value="OK">OK</option>
                         <option value="NG">NG</option>
                     </select>
                 </div>
@@ -147,7 +147,7 @@ if (!empty($header['item_desc'])) {
                 <div class="col-md-2">
                     <label class="form-label fw-bold text-uppercase text-muted">Result</label>
                     <select name="result" id="result_dropdown" class="form-select fw-bold">
-                        <option value="ACC">ACC</option>
+                        <option value="OK">OK</option>
                         <option value="NG">NG</option>
                     </select>
                 </div>
@@ -173,7 +173,7 @@ if (!empty($header['item_desc'])) {
                 <div class="col-md-12 d-flex justify-content-between align-items-center mt-3">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="visual_check" name="visual_check" value="ACC" checked>
-                        <label class="form-check-label fw-bold" for="visual_check">Visual Check (ACC/NG)</label>
+                        <label class="form-check-label fw-bold" for="visual_check">Visual Check (OK/NG)</label>
                     </div>
                     <button type="submit" class="btn btn-primary px-5 fw-bold shadow-sm">
                         <i class="fas fa-plus-circle me-1"></i> Simpan Inspeksi
@@ -209,7 +209,7 @@ if (!empty($header['item_desc'])) {
                     $no = 1;
                     while($d = mysqli_fetch_assoc($details)) {
                         // 1. Perbaiki pengecekan warna (dari PASS ke ACC)
-                        $resColor = ($d['result'] == 'ACC') ? 'success' : 'danger';
+                        $resColor = ($d['result'] == 'OK') ? 'success' : 'danger';
 
                         // Pecah string foto menjadi array
                         $foto_list = !empty($d['foto']) ? explode(',', $d['foto']) : [];
@@ -321,7 +321,7 @@ document.getElementById('visual_check').addEventListener('change', function() {
     if(!this.checked) {
         resultDropdown.value = "NG"; // Jika uncheck, otomatis set NG
     } else {
-        resultDropdown.value = "ACC"; // Jika check, balik ke ACC
+        resultDropdown.value = "OK"; // Jika check, balik ke ACC
     }
 });
 </script>

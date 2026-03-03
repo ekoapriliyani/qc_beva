@@ -173,18 +173,30 @@ include "header.php";
             </div>
             <div class="modal-body">
                 <div class="mb-2">
+                    <label for="" class="small fw-bold">Jenis</label>
+                        <select name="jenis" id="" class="form-select">
+                            <option value="lembaran">Lembaran</option>
+                            <option value="roll">Roll</option>
+                        </select>
+                    </div>
+                <div class="row">
+                    <div class="col-6 mb-2">
                     <label class="small fw-bold">Prod Code</label>
                     <input type="text" name="prod_code" class="form-control" required>
                 </div>
+                <div class="col-6 mb-2"><label class="small fw-bold">D Kawat</label><input type="text" name="d_kawat" class="form-control" required></div>
+                </div>
+                
                 <div class="row">
-                    <div class="col-6 mb-2"><label class="small fw-bold">D Kawat</label><input type="text" name="d_kawat" class="form-control" required></div>
-                    <div class="col-6 mb-2"><label class="small fw-bold">Toleransi Mesh</label><input type="text" name="tol" class="form-control" required></div>
-                    <div class="col-6 mb-2"><label class="small fw-bold">Tol Min</label><input type="text" name="tol_min" class="form-control" required></div>
-                    <div class="col-6 mb-2"><label class="small fw-bold">Tol Plus</label><input type="text" name="tol_plus" class="form-control" required></div>
+                    <div class="mb-2"><label class="small fw-bold">Toleransi Diameter</label><input type="text" name="tol" class="form-control" required></div>
+                    <div class="col-6 mb-2"><label class="small fw-bold">Tol Mesh Min</label><input type="text" name="tol_min" class="form-control" required></div>
+                    <div class="col-6 mb-2"><label class="small fw-bold">Tol Mesh Plus</label><input type="text" name="tol_plus" class="form-control" required></div>
                     <div class="col-6 mb-2"><label class="small fw-bold">P Produk</label><input type="text" name="p_produk" class="form-control" required></div>
                     <div class="col-6 mb-2"><label class="small fw-bold">L Produk</label><input type="text" name="l_produk" class="form-control" required></div>
                     <div class="col-6 mb-2"><label class="small fw-bold">P Mesh</label><input type="text" name="p_mesh" class="form-control" required></div>
                     <div class="col-6 mb-2"><label class="small fw-bold">L Mesh</label><input type="text" name="l_mesh" class="form-control" required></div>
+                    <div class="col-6 mb-2"><label class="small fw-bold">Tol Panjang Produk</label><input type="text" name="tol_p_prod" class="form-control" required></div>
+                    <div class="col-6 mb-2"><label class="small fw-bold">Tol Lebar Produk</label><input type="text" name="tol_l_prod" class="form-control" required></div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -210,7 +222,7 @@ include "header.php";
                 </div>
                 <div class="row">
                     <div class="col-6 mb-2"><label class="small fw-bold">D Kawat</label><input type="text" name="d_kawat" class="form-control" value="<?= $s['d_kawat']; ?>" required></div>
-                    <div class="col-6 mb-2"><label class="small fw-bold">Toleransi Mesh</label><input type="text" name="tol" class="form-control" value="<?= $s['tol']; ?>" required></div>
+                    <div class="col-6 mb-2"><label class="small fw-bold">Toleransi Diameter</label><input type="text" name="tol" class="form-control" value="<?= $s['tol']; ?>" required></div>
                     <div class="col-6 mb-2"><label class="small fw-bold">Tol Min</label><input type="text" name="tol_min" class="form-control" value="<?= $s['tol_min']; ?>" required></div>
                     <div class="col-6 mb-2"><label class="small fw-bold">Tol Plus</label><input type="text" name="tol_plus" class="form-control" value="<?= $s['tol_plus']; ?>" required></div>
                     <div class="col-6 mb-2"><label class="small fw-bold">P Produk</label><input type="text" name="p_produk" class="form-control" value="<?= $s['p_produk']; ?>" required></div>

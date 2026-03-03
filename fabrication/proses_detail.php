@@ -71,7 +71,7 @@ try {
                 $type_clean   = mysqli_real_escape_string($conn, $type);
                 $remark_clean = mysqli_real_escape_string($conn, $_POST['ng_remark'][$key]);
                 
-                $query_ng = "INSERT INTO t_coating_ng (id_detail, ng_type, ng_remark) 
+                $query_ng = "INSERT INTO t_fabrication_ng (id_detail, ng_type, ng_remark) 
                              VALUES ('$id_detail_baru', '$type_clean', '$remark_clean')";
                 
                 if (!mysqli_query($conn, $query_ng)) {

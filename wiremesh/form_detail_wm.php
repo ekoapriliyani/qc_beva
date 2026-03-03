@@ -1,6 +1,5 @@
 <?php 
 include("../koneksi.php"); 
-
 session_start();
 
 if (!isset($_SESSION["login"])) {
@@ -10,14 +9,12 @@ if (!isset($_SESSION["login"])) {
 
 include_once 'functions.php';
 
-// Ambil data user dari session untuk info di dashboard
 $userName = $_SESSION["user_name"];
 $userRole = $_SESSION["role"];
 
 if (isset($_GET['id'])) {
     $id_inspeksi = mysqli_real_escape_string($conn, $_GET['id']);
     
-    // Query JOIN untuk mengambil data Inspeksi dan Detail Produk (termasuk prod_code)
     $sql = "SELECT h.*, p.prod_code, p.jarak_mesh, p.d_kawat, p.tol_min, p.tol_plus, 
                    p.p_produk, p.l_produk, p.p_mesh, p.l_mesh, p.tol
             FROM t_inspeksi_wm h
@@ -43,208 +40,256 @@ if (isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Detail Inspeksi - QC System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
     <style>
-        .readonly-field { background-color: #f0f0f0; cursor: not-allowed; font-weight: 600; color: #555; }
-        .section-title { grid-column: span 2; margin-top: 15px; border-bottom: 1px solid #ddd; padding-bottom: 5px; color: var(--primary-color); font-size: 14px; text-transform: uppercase; }
+        body { background-color: #f8f9fa; }
+        .readonly-field { background-color: #e9ecef !important; font-weight: 600; color: #495057; }
+        .section-title { 
+            border-bottom: 2px solid #0d6efd; 
+            padding-bottom: 5px; 
+            color: #0d6efd; 
+            font-size: 0.9rem; 
+            text-transform: uppercase; 
+            font-weight: bold;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+        .card { border: none; border-radius: 12px; }
+        .form-label { font-size: 0.85rem; font-weight: 600; color: #555; }
     </style>
 </head>
 <body>
 
-<div class="form-container">
-    <div class="form-header">
-        <h2><i class="fas fa-microscope"></i> Tambah Detail Pengukuran</h2>
-        <p>ID Inspeksi: <strong><?php echo $id_inspeksi; ?></strong></p>
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0 text-dark"><i class="fas fa-microscope text-primary"></i> Tambah Detail Pengukuran</h2>
+            <p class="text-muted">ID Inspeksi Utama: <span class="badge bg-primary">#<?php echo $id_inspeksi; ?></span></p>
+        </div>
+        <a href="preview.php?id=<?php echo $id_inspeksi; ?>" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </a>
     </div>
 
     <form action="proses_simpan_detail_wm.php" method="POST">
         <input type="hidden" name="id_inspeksi" value="<?php echo $id_inspeksi; ?>">
-        <div class="grid-container">
-            <div class="section-title"><i class="fas fa-info-circle"></i> Standar Referensi (Tabel Produk)</div>        
-            <div class="form-group">
-                <label for="">PRO Number</label>
-                <input type="text" class="readonly-field" value="<?=  $header['pro_number']; ?>" readonly>
-            </div>
-            <div class="form-group">
-                <label>Product Code</label>
-                <input type="text" class="readonly-field" value="<?php echo $header['prod_code']; ?>" readonly>
-            </div>
-            <div class="form-group">
-                <label>D. Kawat Standard (Tol: <?php echo $header['tol_min']; ?> / <?php echo $header['tol_plus']; ?>)</label>
-                <input type="text" class="readonly-field" value="<?php echo $header['d_kawat'] . ' mm'; ?>" readonly>
-            </div>            
-            <div class="form-group">
-                <label>P x L Produk Standar</label>
-                <input type="text" class="readonly-field" value="<?php echo $header['p_produk'] . ' x ' . $header['l_produk'] . ' mm'; ?>" readonly>
-            </div>
-            <div class="form-group">
-                <label>P x L Mesh Standar</label>
-                <input type="text" class="readonly-field" value="<?php echo $header['p_mesh'] . ' x ' . $header['l_mesh'] . ' mm'; ?>" readonly>
-            </div>
-            <div class="form-group">
-                <label>Toleransi P x L</label>
-                <input type="text" class="readonly-field" value="<?= '± '. $header['tol'] . ' mm'; ?>" readonly>
-            </div>
-            <div class="form-group full-width">
-                <label for="">Lot ID Material</label>
-                <input type="text" name="material" autofocus>
-            </div>      
-            <div class="form-group full-width">
-                <label for="">Nama Operator Produksi</label>
-                <input type="text" name="operator_prod">
-            </div>
-            <div class="section-title"><i class="fas fa-edit"></i> Hasil Pengukuran Aktual</div>
-            <div class="form-group full-width">
-                <label>Diameter Kawat Act (mm)</label>
-                <input type="number" step="0.01" name="d_kawat_act" required>
-            </div>
-            <div class="form-group">
-                <label>Panjang Produk Act (mm)</label>
-                <input type="number" name="p_produk_act" required>
-            </div>
-            <div class="form-group">
-                <label>Lebar Produk Act (mm)</label>
-                <input type="number" name="l_produk_act" required>
-            </div>
-            <div class="form-group">
-                <label>Panjang Mesh Act (mm)</label>
-                <input type="number" name="p_mesh_act" required>
-            </div>
-            <div class="form-group">
-                <label>Lebar Mesh Act (mm)</label>
-                <input type="number" name="l_mesh_act" required>
-            </div>
-            <div class="form-group">
-                <label>Selisih Diagonal (mm)</label>
-                <input type="number" name="diagonal" required>
-            </div>
-            <div class="form-group">
-                <label>Torsi Strength</label>
-                <select name="torsi_strgh" required>
-                    <option value="OK">OK</option>
-                    <option value="NG">NG</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Status Dimensi</label>
-                <select name="status_dimensi" id="status_dimensi" required>
-                    <option value="OK">OK</option>
-                    <option value="NG">NG</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- Tombol untuk membuka form detail visual -->
-            <div class="form-group">
-                <button type="button" id="btnVisualDetail" class="btn btn-info">
-                    <i class="fas fa-eye"></i> Tambah Visual Detail
-                </button>
-            </div>
-
-        <!-- Form tambahan (default hidden) -->
-            <div id="visualDetailForm" style="display:none; margin-top:15px; border:1px solid #ddd; padding:10px; border-radius:5px;">
-                <h4 style="color:var(--primary-color); margin-bottom:10px;">
-                    <i class="fas fa-search"></i> Form Visual Detail
-                </h4>
-                <div class="form-group full-width">
-                    <label>Visual Detail</label>
-                    <select name="visual_detail" required>
-                    <option value="OK">OK</option>
-                    <option value="Crack">Crack</option>
-                    <option value="Karat">Karat</option>
-                    <option value="Las (Lepas/Tidak ngelas)">Las (Lepas/Tidak ngelas)</option>
-                    <option value="CW-LW (Pendek/Bengkok/Putus)">CW-LW (Pendek/Bengkok/Putus)</option>
-                    <option value="Triming">Triming</option>
-                    <option value="Mesh">Mesh</option>
-                    <option value="Handling">Handling</option>
-                    </select>
-                </div>
-                <div class="form-group full-width">
-                    <label>Keterangan</label>
-                    <textarea name="keterangan" placeholder="Tambahkan keterangan"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="">Jumlah</label>
-                    <input type="number">
+        
+        <div class="row g-4">
+            <div class="col-lg-5">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="section-title"><i class="fas fa-info-circle"></i> Standar Referensi</div>
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">PRO Number</label>
+                                <input type="text" class="form-control readonly-field" value="<?= $header['pro_number']; ?>" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Product Code</label>
+                                <input type="text" class="form-control readonly-field" value="<?= $header['prod_code']; ?>" readonly>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Diameter Kawat Standar</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control readonly-field" value="<?= $header['d_kawat']; ?>" readonly>
+                                    <span class="input-group-text">mm</span>
+                                    <span class="input-group-text small text-muted"><?= $header['tol_min']; ?> / <?= $header['tol_plus']; ?></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">P x L Produk Standar</label>
+                                <input type="text" class="form-control readonly-field" value="<?= $header['p_produk'] . ' x ' . $header['l_produk']; ?>" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">P x L Mesh Standar</label>
+                                <input type="text" class="form-control readonly-field" value="<?= $header['p_mesh'] . ' x ' . $header['l_mesh']; ?>" readonly>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Toleransi P x L</label>
+                                <input type="text" class="form-control readonly-field" value="<?= '± '. $header['tol'] . ' mm'; ?>" readonly>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-        <div class="btn-container">
-            <a href="preview.php?id=<?php echo $id_inspeksi; ?>" class="btn btn-cancel">Batal</a>
-            <button type="submit" class="btn btn-submit">Simpan Detail</button>
+            <div class="col-lg-7">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="section-title text-success" style="border-color: #198754;"><i class="fas fa-edit"></i> Hasil Pengukuran Aktual</div>
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Lot ID Material</label>
+                                <input type="text" name="material" class="form-control border-primary" placeholder="Contoh: LOT-001" autofocus required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Nama Operator Produksi</label>
+                                <input type="text" name="operator_prod" class="form-control border-primary" placeholder="Nama Lengkap" required>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Diameter Kawat Act (mm)</label>
+                                <input type="number" step="0.01" name="d_kawat_act" class="form-control form-control-lg" placeholder="0.00" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Panjang Produk Act (mm)</label>
+                                <input type="number" name="p_produk_act" class="form-control" placeholder="0" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Lebar Produk Act (mm)</label>
+                                <input type="number" name="l_produk_act" class="form-control" placeholder="0" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Panjang Mesh Act (mm)</label>
+                                <input type="number" name="p_mesh_act" class="form-control" placeholder="0" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Lebar Mesh Act (mm)</label>
+                                <input type="number" name="l_mesh_act" class="form-control" placeholder="0" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Selisih Diagonal (mm)</label>
+                                <input type="number" name="diagonal" class="form-control" placeholder="0" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Torsi Strength</label>
+                                <select name="torsi_strgh" class="form-select border-info" required>
+                                    <option value="OK">OK</option>
+                                    <option value="NG">NG</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Status Dimensi</label>
+                                <select name="status_dimensi" id="status_dimensi" class="form-select fw-bold bg-light" required>
+                                    <option value="OK">OK</option>
+                                    <option value="NG">NG</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="button" id="btnVisualDetail" class="btn btn-info w-100 text-white fw-bold">
+                                <i class="fas fa-eye"></i> Tambah Visual Detail (Opsional)
+                            </button>
+                        </div>
+
+                        <div id="visualDetailForm" class="mt-3 p-3 border rounded bg-light" style="display:none;">
+                            <h6 class="fw-bold text-info mb-3"><i class="fas fa-search"></i> Pengecekan Visual</h6>
+                            <div class="row g-3">
+                                <div class="col-md-8">
+                                    <label class="form-label">Visual Detail</label>
+                                    <select name="visual_detail" class="form-select">
+                                        <option value="OK">OK</option>
+                                        <option value="Crack">Crack</option>
+                                        <option value="Karat">Karat</option>
+                                        <option value="Las (Lepas/Tidak ngelas)">Las (Lepas/Tidak ngelas)</option>
+                                        <option value="CW-LW (Pendek/Bengkok/Putus)">CW-LW (Pendek/Bengkok/Putus)</option>
+                                        <option value="Triming">Triming</option>
+                                        <option value="Mesh">Mesh</option>
+                                        <option value="Handling">Handling</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Jumlah</label>
+                                    <input type="number" name="visual_qty" class="form-control" value="0">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Keterangan</label>
+                                    <textarea name="keterangan" class="form-control" rows="2" placeholder="Detail temuan visual..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 d-flex gap-2">
+                            <button type="submit" class="btn btn-primary px-5 py-2 fw-bold shadow-sm">
+                                <i class="fas fa-save"></i> Simpan Detail
+                            </button>
+                            <button type="reset" class="btn btn-light border px-4">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-
 document.addEventListener("DOMContentLoaded", function() {
-    const dKawatAct   = document.querySelector("input[name='d_kawat_act']");
-    const pMeshAct    = document.querySelector("input[name='p_mesh_act']");
-    const lMeshAct    = document.querySelector("input[name='l_mesh_act']");
-    const torsiStrgh  = document.querySelector("select[name='torsi_strgh']");
+    const dKawatAct    = document.querySelector("input[name='d_kawat_act']");
+    const pMeshAct     = document.querySelector("input[name='p_mesh_act']");
+    const lMeshAct     = document.querySelector("input[name='l_mesh_act']");
+    const torsiStrgh   = document.querySelector("select[name='torsi_strgh']");
     const statusDimensi = document.getElementById("status_dimensi");
 
-    // ambil nilai standar & toleransi dari PHP
+    // Ambil nilai standar & toleransi
     const dStandar   = parseFloat("<?= $header['d_kawat']; ?>");
     const tolMin     = parseFloat("<?= $header['tol_min']; ?>");
     const tolPlus    = parseFloat("<?= $header['tol_plus']; ?>");
     const pMeshStd   = parseFloat("<?= $header['p_mesh']; ?>");
     const lMeshStd   = parseFloat("<?= $header['l_mesh']; ?>");
-    const tolPL      = parseFloat("<?= $header['tol']; ?>"); // toleransi P x L
+    const tolPL      = parseFloat("<?= $header['tol']; ?>");
 
     function checkStatus() {
         let status = "OK";
 
-        // cek diameter
+        // 1. Cek Diameter Kawat
         const dVal = parseFloat(dKawatAct.value);
         if (!isNaN(dVal)) {
-            const min = dStandar - tolMin;
-            const max = dStandar + tolPlus;
-            if (dVal < min || dVal > max) status = "NG";
+            if (dVal < (dStandar - tolMin) || dVal > (dStandar + tolPlus)) status = "NG";
         }
 
-        // cek panjang mesh
+        // 2. Cek Mesh Panjang
         const pMeshVal = parseFloat(pMeshAct.value);
         if (!isNaN(pMeshVal)) {
             if (pMeshVal < (pMeshStd - tolPL) || pMeshVal > (pMeshStd + tolPL)) status = "NG";
         }
 
-        // cek lebar mesh
+        // 3. Cek Mesh Lebar
         const lMeshVal = parseFloat(lMeshAct.value);
         if (!isNaN(lMeshVal)) {
             if (lMeshVal < (lMeshStd - tolPL) || lMeshVal > (lMeshStd + tolPL)) status = "NG";
         }
 
-        // cek torsi strength
-        if (torsiStrgh.value === "NG") {
-            status = "NG";
-        }
+        // 4. Cek Torsi
+        if (torsiStrgh.value === "NG") status = "NG";
 
         statusDimensi.value = status;
+        
+        // Ganti warna background status agar jelas
+        if(status === "NG") {
+            statusDimensi.classList.replace("bg-light", "bg-danger");
+            statusDimensi.classList.add("text-white");
+        } else {
+            statusDimensi.classList.replace("bg-danger", "bg-light");
+            statusDimensi.classList.remove("text-white");
+        }
     }
 
-    // event listener untuk semua input
     [dKawatAct, pMeshAct, lMeshAct].forEach(el => {
         el.addEventListener("input", checkStatus);
     });
     torsiStrgh.addEventListener("change", checkStatus);
-});
 
-
-
-document.addEventListener("DOMContentLoaded", function() {
+    // Toggle Visual Detail
     const btnVisualDetail = document.getElementById("btnVisualDetail");
     const visualDetailForm = document.getElementById("visualDetailForm");
 
     btnVisualDetail.addEventListener("click", function() {
         if (visualDetailForm.style.display === "none") {
             visualDetailForm.style.display = "block";
+            btnVisualDetail.classList.replace("btn-info", "btn-secondary");
             btnVisualDetail.innerHTML = '<i class="fas fa-times"></i> Tutup Visual Detail';
         } else {
             visualDetailForm.style.display = "none";
-            btnVisualDetail.innerHTML = '<i class="fas fa-eye"></i> Tambah Visual Detail';
+            btnVisualDetail.classList.replace("btn-secondary", "btn-info");
+            btnVisualDetail.innerHTML = '<i class="fas fa-eye"></i> Tambah Visual Detail (Opsional)';
         }
     });
 });

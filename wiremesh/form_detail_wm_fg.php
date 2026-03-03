@@ -1,6 +1,5 @@
 <?php 
 include("../koneksi.php"); 
-
 session_start();
 
 if (!isset($_SESSION["login"])) {
@@ -10,25 +9,17 @@ if (!isset($_SESSION["login"])) {
 
 include_once 'functions.php';
 
-// Ambil data user dari session untuk info di dashboard
-$userName = $_SESSION["user_name"];
-$userRole = $_SESSION["role"];
-
 if (isset($_GET['id'])) {
     $id_inspeksi = mysqli_real_escape_string($conn, $_GET['id']);
-    
-    // Query JOIN untuk mengambil data Inspeksi dan Detail Produk (termasuk prod_code)
-    $sql = "SELECT h.*, p.prod_code, p.jarak_mesh, p.d_kawat, p.tol_min, p.tol_plus, 
-                   p.p_produk, p.l_produk, p.p_mesh, p.l_mesh 
+    $sql = "SELECT h.*, p.prod_code, p.p_produk, p.l_produk
             FROM t_inspeksi_wm h
             JOIN t_produk p ON h.prod_code = p.prod_code
             WHERE h.id_inspeksi = '$id_inspeksi'";
-            
     $result = mysqli_query($conn, $sql);
     $header = mysqli_fetch_assoc($result);
 
     if (!$header) {
-        echo "<script>alert('Data Inspeksi atau Produk tidak ditemukan!'); window.location.href='index.php';</script>";
+        echo "<script>alert('Data tidak ditemukan!'); window.location.href='index.php';</script>";
         exit;
     }
 } else {
@@ -42,78 +33,175 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Detail Inspeksi - QC System</title>
+    <title>Inspeksi FG - QC System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
     <style>
-        .readonly-field { background-color: #f0f0f0; cursor: not-allowed; font-weight: 600; color: #555; }
-        .section-title { grid-column: span 2; margin-top: 15px; border-bottom: 1px solid #ddd; padding-bottom: 5px; color: var(--primary-color); font-size: 14px; text-transform: uppercase; }
+        body { background-color: #f0f2f5; }
+        .card { border: none; border-radius: 15px; }
+        .form-label { font-weight: 600; font-size: 0.85rem; color: #4a5568; }
+        .summary-box { background-color: #f8f9fa; border-left: 4px solid #198754; padding: 10px 15px; border-radius: 5px; }
+        .visual-row { background: #fff; border: 1px solid #dee2e6; padding: 15px; border-radius: 10px; margin-bottom: 10px; position: relative; }
+        .btn-remove { position: absolute; top: 10px; right: 10px; }
     </style>
 </head>
 <body>
 
-<div class="form-container">
-    <div class="form-header">
-        <h2><i class="fas fa-microscope"></i> Inspeksi Finish Good</h2>
-        <p>ID Inspeksi: <strong><?php echo $id_inspeksi; ?></strong></p>
-    </div>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold mb-0 text-dark">
+                    <i class="fas fa-box-open text-success me-2"></i>Inspeksi Finish Good
+                </h3>
+                <a href="preview.php?id=<?= $id_inspeksi; ?>" class="btn btn-outline-secondary btn-sm">
+                    <i class="fas fa-times"></i> Tutup
+                </a>
+            </div>
 
-    <form action="proses_simpan_detail_wm_fg.php" method="POST">
-        <input type="hidden" name="id_inspeksi" value="<?php echo $id_inspeksi; ?>">
-        <div class="grid-container">
-            <div class="form-group">
-                <label>Visual Detail</label>
-                <select name="visual_detail" required>
-                    <option value="OK">OK</option>
-                    <option value="Crack">Crack</option>
-                    <option value="Karat">Karat</option>
-                    <option value="Las (Lepas/Tidak ngelas)">Las (Lepas/Tidak ngelas)</option>
-                    <option value="CW-LW (Pendek/Bengkok/Putus)">CW-LW (Pendek/Bengkok/Putus)</option>
-                    <option value="Triming">Triming</option>
-                    <option value="Mesh">Mesh</option>
-                    <option value="Handling">Handling</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Batch Number</label>
-                <input type="number" name="batch_number" required>
-            </div>
-            <div class="form-group">
-                <label>Status</label>
-                <select name="status" required>
-                    <option value="OK">OK</option>
-                    <option value="NG">NG</option>
-                    <option value="REJECT">REJECT</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="QTY">QTY</label>
-                <input type="number" name="qty">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-success text-white py-3">
+                    <span class="fw-bold"><i class="fas fa-clipboard-check me-2"></i>Form Input Hasil Akhir</span>
+                </div>
+                
+                <div class="card-body p-4">
+                    <div class="summary-box mb-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <small class="text-muted d-block text-uppercase small fw-bold">Kode Produk</small>
+                                <span class="fw-bold text-success fs-5"><?= $header['prod_code']; ?></span>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="text-muted d-block text-uppercase small fw-bold">Standar Dimensi</small>
+                                <span class="fw-bold fs-5"><?= $header['p_produk']; ?> x <?= $header['l_produk']; ?> mm</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form action="proses_simpan_detail_wm_fg.php" method="POST">
+                        <input type="hidden" name="id_inspeksi" value="<?= $id_inspeksi; ?>">
+                        
+                        <div class="row g-3 mb-4 p-3 bg-light rounded border">
+                            <div class="col-md-4">
+                                <label class="form-label">Batch / Bundle Number</label>
+                                <input type="number" name="batch_number" class="form-control border-primary" required autofocus>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Quantity Total Produk</label>
+                                <div class="input-group">
+                                    <input type="number" name="qty" class="form-control border-primary" placeholder="0" required>
+                                    <span class="input-group-text small">Unit</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Status Akhir Batch</label>
+                                <select name="status" id="statusFG" class="form-select fw-bold border-primary" required onchange="updateStatusColor(this)">
+                                    <option value="OK">PASS (OK)</option>
+                                    <option value="NG">NOT GOOD (NG)</option>
+                                    <option value="REJECT">REJECT</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="fw-bold mb-0 text-secondary"><i class="fas fa-search me-2"></i>Detail Temuan Visual (Multiple)</h6>
+                            <button type="button" class="btn btn-outline-primary btn-sm" id="addVisual">
+                                <i class="fas fa-plus me-1"></i> Tambah Temuan
+                            </button>
+                        </div>
+
+                        <div id="visualContainer">
+                            <div class="visual-row shadow-sm border-start border-4 border-info">
+                                <div class="row g-3">
+                                    <div class="col-md-5">
+                                        <label class="form-label small text-muted">JENIS VISUAL</label>
+                                        <select name="visual_detail[]" class="form-select" required>
+                                            <option value="OK">OK (Normal)</option>
+                                            <option value="Crack">Crack</option>
+                                            <option value="Karat">Karat</option>
+                                            <option value="Las (Lepas/Tidak ngelas)">Las (Lepas/Tidak ngelas)</option>
+                                            <option value="CW-LW (Pendek/Bengkok/Putus)">CW-LW (Pendek/Bengkok/Putus)</option>
+                                            <option value="Triming">Triming</option>
+                                            <option value="Mesh">Mesh</option>
+                                            <option value="Handling">Handling</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <label class="form-label small text-muted">KETERANGAN / CATATAN</label>
+                                        <input type="text" name="visual_ket[]" class="form-control" placeholder="Tulis detail temuan di sini...">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 d-grid gap-2 d-md-flex justify-content-md-end mt-5">
+                            <button type="reset" class="btn btn-light border px-4">Reset</button>
+                            <button type="submit" class="btn btn-success px-5 fw-bold shadow">
+                                <i class="fas fa-save me-2"></i>Simpan Laporan FG
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="btn-container">
-            <a href="preview.php?id=<?php echo $id_inspeksi; ?>" class="btn btn-cancel">Batal</a>
-            <button type="submit" class="btn btn-submit">Simpan Detail</button>
-        </div>
-    </form>
+    </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const btnVisualDetail = document.getElementById("btnVisualDetail");
-    const visualDetailForm = document.getElementById("visualDetailForm");
+    const container = document.getElementById('visualContainer');
+    const addButton = document.getElementById('addVisual');
 
-    btnVisualDetail.addEventListener("click", function() {
-        if (visualDetailForm.style.display === "none") {
-            visualDetailForm.style.display = "block";
-            btnVisualDetail.innerHTML = '<i class="fas fa-times"></i> Tutup Visual Detail';
-        } else {
-            visualDetailForm.style.display = "none";
-            btnVisualDetail.innerHTML = '<i class="fas fa-eye"></i> Tambah Visual Detail';
+    // Tambah Baris Baru
+    addButton.addEventListener('click', () => {
+        const newRow = document.createElement('div');
+        newRow.className = 'visual-row shadow-sm border-start border-4 border-info mb-3 animate__animated animate__fadeIn';
+        newRow.innerHTML = `
+            <button type="button" class="btn btn-link text-danger btn-remove remove-row p-0">
+                <i class="fas fa-trash-alt"></i> Hapus
+            </button>
+            <div class="row g-3">
+                <div class="col-md-5">
+                    <label class="form-label small text-muted">JENIS VISUAL</label>
+                    <select name="visual_detail[]" class="form-select" required>
+                        <option value="OK">OK (Normal)</option>
+                        <option value="Crack">Crack</option>
+                        <option value="Karat">Karat</option>
+                        <option value="Las (Lepas/Tidak ngelas)">Las (Lepas/Tidak ngelas)</option>
+                        <option value="CW-LW (Pendek/Bengkok/Putus)">CW-LW (Pendek/Bengkok/Putus)</option>
+                        <option value="Triming">Triming</option>
+                        <option value="Mesh">Mesh</option>
+                        <option value="Handling">Handling</option>
+                    </select>
+                </div>
+                <div class="col-md-7">
+                    <label class="form-label small text-muted">KETERANGAN / CATATAN</label>
+                    <input type="text" name="visual_ket[]" class="form-control" placeholder="Tulis detail temuan di sini...">
+                </div>
+            </div>
+        `;
+        container.appendChild(newRow);
+    });
+
+    // Hapus Baris
+    container.addEventListener('click', (e) => {
+        if (e.target.closest('.remove-row')) {
+            e.target.closest('.visual-row').remove();
         }
     });
-});
-</script>
 
+    function updateStatusColor(select) {
+        if(select.value === 'OK') {
+            select.className = 'form-select fw-bold border-success text-success';
+        } else if(select.value === 'NG') {
+            select.className = 'form-select fw-bold border-warning text-warning';
+        } else {
+            select.className = 'form-select fw-bold border-danger text-danger';
+        }
+    }
+    
+    document.addEventListener("DOMContentLoaded", () => updateStatusColor(document.getElementById('statusFG')));
+</script>
 </body>
 </html>
